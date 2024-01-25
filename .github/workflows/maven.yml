@@ -1,0 +1,19 @@
+name: build-project
+run-name: Runner ${{ github.actor }} assigned
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs: 
+  setup: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with :
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - run: mvn --batch-mode --update-snapshots verify
