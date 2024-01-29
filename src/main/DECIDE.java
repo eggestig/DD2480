@@ -1,8 +1,8 @@
 package main;
 
-
 import java.util.Random;
-import de.mkammerer.skeleton.*;
+import static main.CMV.initCMV;
+import static main.Parameters;
 
 class DECIDE {
     static Parameters param;

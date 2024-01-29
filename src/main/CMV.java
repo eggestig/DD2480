@@ -1,9 +1,7 @@
 package main;
 
-
 import java.util.HashSet;
-import main.resources.Parameters;
-import static main.resources.LICutils.*;
+import static main.LICutils.*;
 
 public class CMV {
 
