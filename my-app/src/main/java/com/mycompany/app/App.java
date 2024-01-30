@@ -1,10 +1,10 @@
-package DD2480.group16.decide;
+package com.mycompany.app;
 
 /**
  * Hello world!
  *
  */
-public class Main 
+public class App 
 {
     public static void main( String[] args )
     {
