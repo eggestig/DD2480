@@ -10,6 +10,7 @@ public class App {
     
     public static void main(String[] args) throws Exception {
 
+        /* Create default "global" variables */
         Random rand = new Random();
 
         NUMPOINTS = rand.nextInt(100 - 2) + 2;
@@ -43,20 +44,13 @@ public class App {
             x_pts[i] = i;
             y_pts[i] = i;
         }
-
-        cmv = CMV.initCMV(param, NUMPOINTS, x_pts, y_pts);
-
-        int i = 0;
-        for(Boolean lic : cmv) {
-            System.out.println("LIC" + i + '\t' + lic);
-            i++;
-        }
+        
+        System.out.println("Parameters created");
 
         int i;
         int j;
 
         // Generate random PUM - preliminary unlocking matrix
-        Random rand = new Random();
         int len = 15;
         int[][] pum = new int[len][len];
         for (i = 0; i < len; i++) {
