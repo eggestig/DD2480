@@ -2,13 +2,54 @@ package com.mycompany.app;
 import java.util.Random;
 
 public class App {
+    static Parameters param;
+    static Boolean[] cmv = new Boolean[15];
+    static int NUMPOINTS;
+    static int[] x_pts;
+    static int[] y_pts;
+    
     public static void main(String[] args) throws Exception {
+
+        /* Create default "global" variables */
+        Random rand = new Random();
+
+        NUMPOINTS = rand.nextInt(100 - 2) + 2;
+        int p_pts = rand.nextInt(NUMPOINTS - 2) + 2;
+        x_pts = new int[NUMPOINTS];
+        y_pts = new int[NUMPOINTS];
+        param = new Parameters(
+            100.0,
+            10.0,
+            (double) rand.nextInt(3),
+            1000.0,
+            rand.nextInt(NUMPOINTS), 
+            rand.nextInt(10),
+            100.0,
+            p_pts,
+            p_pts,
+            p_pts,
+            p_pts,
+            p_pts,
+            p_pts,
+            p_pts,
+            p_pts,
+            p_pts,
+            100.0,
+            50.0,
+            100.0
+        );
+
+        for(int i = 0; i < NUMPOINTS; i++) {
+            x_pts[i] = i;
+            y_pts[i] = i;
+        }
+        
+        System.out.println("Parameters created");
 
         int i;
         int j;
 
         // Generate random PUM - preliminary unlocking matrix
-        Random rand = new Random();
         int len = 15;
         int[][] pum = new int[len][len];
         for (i = 0; i < len; i++) {
