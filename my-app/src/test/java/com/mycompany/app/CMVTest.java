@@ -8,6 +8,7 @@ import org.junit.Test;
 import com.mycompany.app.Parameters;
 import com.mycompany.app.CMV;
 import java.util.Random;
+import java.util.Arrays; 
 
 /**
  * Unit test for simple App.
@@ -18,38 +19,49 @@ public class CMVTest
      * Test initializing CMV with all false LIC
      */
     @Test
-    public void testCMV() {
-        int NUMPOINTS = 10;
-        int[] x_pts = new int[NUMPOINTS];
-        int[] y_pts = new int[NUMPOINTS];
-        Parameters param = new Parameters
-                            (
-                            0.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            0, 
-                            0,
-                            0.0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0.0,
-                            0.0,
-                            0.0
-                            );
+    public void testCMV()
+    {
+        Parameters param;
+        int numpoints;
+        double[] x_pts;
+        double[] y_pts;
 
-        for(int i = 0; i < NUMPOINTS; i++) {
-            x_pts[i] = i;
-            y_pts[i] = i;
-        }
-        Boolean[] cmv;
+
+        Random rand = new Random();
+
+        numpoints = rand.nextInt(100 - 2) + 2;
+        x_pts = new double[numpoints];
+        y_pts = new double[numpoints];
+
+        Arrays.fill(x_pts, 0);
+        Arrays.fill(y_pts, 1);
+
+        param = new Parameters(
+            numpoints,
+            x_pts,
+            y_pts,
+            1.0,
+            2.0,
+            3.0,
+            4.0,
+            5,
+            6,
+            7.0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17.0,
+            18.0,
+            19.0
+        );
+
+        boolean[] cmv;
         cmv = CMV.initCMV(param);
         for(int licNum = 0; licNum < cmv.length; licNum++) {
             assertFalse("LIC" + licNum, cmv[licNum]);
@@ -63,14 +75,14 @@ public class CMVTest
         double[] x_pts = new double[]{0.0, 1.0};
         double[] y_pts = new double[]{0.0, 1.0};
         
-        param = param.deepCopy();
+        Parameters param = new Parameters();
         param.setNUMPOINTS(2);
         param.setXpoints(x_pts);
         param.setYpoints(y_pts);
 
-        cmv = CMV.initCMV(param);
+        cmv = new CMV();
 
-        assertFalse("LIC 5", cmv[5]);
+        assertFalse("LIC 5", cmv.LIC5(param));
 
     }
 
@@ -81,15 +93,15 @@ public class CMVTest
         double[] x_pts = new double[]{1.0, 0.0};
         double[] y_pts = new double[]{0.0, 1.0};
         
-        param = param.deepCopy();
+        Parameters param = new Parameters();
         param.setNUMPOINTS(2);
         param.setXpoints(x_pts);
         param.setYpoints(y_pts);
 
         Boolean[] cmv;
-        cmv = CMV.initCMV(param);
+        cmv = new CMV();
 
-        assertTrue("LIC 5", cmv[5]);
+        assertTrue("LIC 5", cmv.LIC5(param));
 
     }
 
@@ -105,7 +117,7 @@ public class CMVTest
         int n_pts = 3;
         double dist = 1;
         
-        param = param.deepCopy();
+        Parameters param = new Parameters();
         param.setNUMPOINTS(2);
         param.setXpoints(x_pts);
         param.setYpoints(y_pts);
@@ -113,9 +125,9 @@ public class CMVTest
         param.setDIST(dist);
 
         Boolean[] cmv;
-        cmv = CMV.initCMV(param);
+        cmv = new CMV();
 
-        assertTrue("LIC 5", cmv[5]);
+        assertTrue("LIC 6", cmv.LIC6(param));
 
     }
 
@@ -130,7 +142,7 @@ public class CMVTest
         int n_pts = 3;
         double dist = 100;
         
-        param = param.deepCopy();
+        Parameters param = new Parameters();
         param.setNUMPOINTS(2);
         param.setXpoints(x_pts);
         param.setYpoints(y_pts);
@@ -140,20 +152,20 @@ public class CMVTest
         Boolean[] cmv;
         cmv = CMV.initCMV(param);
 
-        assertFalse("LIC 5", cmv[5]);
+        assertFalse("LIC 6", cmv.LIC6(param));
 
     }
 
-    //Test LIC 6 throws invalidN_PTSError for invalid N_PTS
+    //Test LIC 6 throws InvalidParameterException for invalid N_PTS
     //Invalid N_PTS if N_PTS < 3
     @Test
-    public void invalid_input_LIC_6_N_PTS_less_than_3_throws_invalid_N_PTS_error() {
+    public void invalid_input_LIC_6_N_PTS_less_than_3_throws_invalid_N_PTS_exception() {
         double[] x_pts = new double[]{0.0, 100.0, 1.0};
         double[] y_pts = new double[]{0.0, 100.0, 1.0};
         int n_pts = 0;
         double dist = 1;
         
-        param = param.deepCopy();
+        Parameters param = new Parameters();
         param.setNUMPOINTS(2);
         param.setXpoints(x_pts);
         param.setYpoints(y_pts);
@@ -161,30 +173,13 @@ public class CMVTest
         param.setDIST(dist);
 
         Boolean[] cmv;
-        cmv = CMV.initCMV(param);
+        cmv = new CMV();
 
-        // assert test throws custom error
-    }
-
-    //Test LIC 6 returns false for invalid N_PTS
-    //Invalid N_PTS if N_PTS > NUMPOINTS
-    @Test
-    public void valid_input_LIC_6_N_PTS_greater_than_NUMPOINTS_returns_false() {
-        double[] x_pts = new double[]{0.0, 100.0, 1.0};
-        double[] y_pts = new double[]{0.0, 100.0, 1.0};
-        int n_pts = 4;
-        double dist = 1;
-        
-        param = param.deepCopy();
-        param.setNUMPOINTS(2);
-        param.setXpoints(x_pts);
-        param.setYpoints(y_pts);
-        param.setN_PTS(n_pts);
-        param.setDIST(dist);
-
-        Boolean[] cmv;
-        cmv = CMV.initCMV(param);
-
-        assertFalse("LIC 5", cmv[5]);
+        Exception exception = assertThrows(InvalidParameterException.class, cmv.LIC6(param));
+    
+        String expectedMessage = "N_PTS need to be between 3 and NUMPOINTS inclusive";
+        String actualMessage = exception.getMessage();
+    
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }

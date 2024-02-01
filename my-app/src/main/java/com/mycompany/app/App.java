@@ -1,53 +1,55 @@
 package com.mycompany.app;
 import java.util.Random;
+import java.util.Arrays; 
 
 public class App {
     static Parameters param;
-    static Boolean[] cmv;
+    static boolean[] cmv;
     static int NUMPOINTS;
-    static int[] x_pts;
-    static int[] y_pts;
+    static double[] x_pts;
+    static double[] y_pts;
     
     public static void main(String[] args) throws Exception {
 
         /* Create default "global" variables */
         Random rand = new Random();
+        int numpoints = rand.nextInt(100 - 2) + 2;
+        double[] x_pts = new double[numpoints];
+        double[] y_pts = new double[numpoints];
 
-        NUMPOINTS = rand.nextInt(100 - 2) + 2;
-        int p_pts = rand.nextInt(NUMPOINTS - 2) + 2;
-        x_pts = new int[NUMPOINTS];
-        y_pts = new int[NUMPOINTS];
-        param = new Parameters(
-            100.0,
-            10.0,
-            (double) rand.nextInt(3),
-            1000.0,
-            rand.nextInt(NUMPOINTS), 
-            rand.nextInt(10),
-            100.0,
-            p_pts,
-            p_pts,
-            p_pts,
-            p_pts,
-            p_pts,
-            p_pts,
-            p_pts,
-            p_pts,
-            p_pts,
-            100.0,
-            50.0,
-            100.0
+        // Fill arrays
+        Arrays.fill(x_pts, 0);
+        Arrays.fill(y_pts, 1);
+
+        Parameters param = new Parameters(
+            100,
+            x_pts,
+            y_pts,
+            1.0,
+            2.0,
+            3.0,
+            4.0,
+            5,
+            6,
+            7.0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17.0,
+            18.0,
+            19.0
         );
 
-        for(int i = 0; i < NUMPOINTS; i++) {
-            x_pts[i] = i;
-            y_pts[i] = i;
-        }
-
-        cmv = CMV.initCMV(param, NUMPOINTS, x_pts, y_pts);
+        boolean[] cmv = CMV.initCMV(param);
 
         int k = 0;
-        for(Boolean lic : cmv) {
+        for(boolean lic : cmv) {
             System.out.println("LIC" + k + '\t' + lic);
             k++;
         }
