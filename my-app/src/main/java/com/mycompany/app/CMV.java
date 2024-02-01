@@ -12,20 +12,31 @@ public class CMV{
         // TODO: LIC 1 - 14
 
         switch(LIC_num) {
+
             case(0):
                 return LIC0(param);
             case(1):
                 return LIC1(param);
             case(2):
                 return LIC2(param);
-            // case(5):
-            //     return LIC5(param);
-            // case(6):
-            //     return LIC6(param);
-            // case(7):
-            //     return LIC7(param);
-            // case(8):
-            //     return LIC8(param);
+            case(3):
+                return LIC3(param);
+            case(4):
+                return LIC4(param);
+            case(5):
+                return LIC5(param);
+            case(6):
+               return LIC6(param);
+            case(7):
+               return LIC7(param);
+            case(8):
+               return LIC8(param);
+            case(9):
+                return LIC9(param);
+            case(10):
+                return LIC10(param);
+            case(11):
+                return LIC11(param);
             case(12):
                 return LIC12(param);
             case(13):
@@ -42,6 +53,7 @@ public class CMV{
         // Return true if there exists at least one set of two consecutive data points
         // that are a distance greater than the length, LENGTH1, apart.
         // Else return false.
+        // (0 ≤ AREA1)
 
         if (params.getX_PTS().length < 2 || params.getY_PTS().length  < 2) {
             return false;
@@ -126,7 +138,7 @@ public class CMV{
                 return true;
             }        
         }
-
+      
         return false;
     }
     //assume all perivous is true
@@ -300,6 +312,66 @@ public class CMV{
         return  false;
     }
 
+    // ************ Verify that this method works as intended, not sure if it's implemented correctly *****//
+    public static Boolean LIC4(Parameters params) {
+        // Return true if there exists at least one set of Q_PTS consecutive data points 
+        // that lie in more than QUADS quadrants.
+        // Else return false.
+
+        // Where there is ambiguity as to which quadrant contains a given point,
+        // priority of decision will be by quadrant number, i.e., I, II, III, IV.
+        // For example, the data point (0,0) is in quadrant I, the point (-l,0) is in quadrant II, 
+        // the point (0,-l) is in quadrant III, the point (0,1) is in quadrant I and the point (1,0) is in quadrant I.
+        // (2 ≤ Q_PTS ≤ NUMPOINTS), (1 ≤ QUADS ≤ 3)
+
+        if (params.getQUADS()<1 || params.getX_PTS().length<1 || params.getY_PTS().length<1) {
+            return false;        
+        }
+
+        for(int i = 0; i <= params.getNUMPOINTS() - params.getQ_PTS(); i++) {
+        
+            // Set to store unique quadrants
+            HashSet<Double> quad_set = new HashSet<>();
+
+            for (int p = 0; p < params.getQ_PTS(); p++) {
+                double x = params.getX_PTS()[i+p];
+                double y = params.getY_PTS()[i+p];
+
+                // Determine the quadrant for the current point
+                double quadrant = LICutils.getQuadrant(x, y);
+                quad_set.add(quadrant);
+                if(quad_set.size() > params.getQUADS()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static Boolean LIC5(Parameters params) {
+        // Return true if there exists at least one set of two consecutive data points,
+        // (X[i],Y[i]) and (X[j],Y[j]), such that X[j] - X[i] < 0
+        // (where i = j-1).
+        // Else return false.
+
+        if (params.getX_PTS().length<2 || params.getY_PTS().length<2 || params.getNUMPOINTS() < 2) {
+            System.out.println("Error");
+            return false;
+        }
+        System.out.println("Continued !!!");
+
+        for(int i = 0; i < params.getNUMPOINTS(); i++) {
+            for(int j = i + 1; j < params.getNUMPOINTS(); j++) {
+                if(params.getX_PTS()[j] - params.getX_PTS()[i] < 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
     public static boolean LIC9(Parameters params) {
         // Return true if there exists at least one set of three data points separated by
         // exactly C_PTS and D_PTS consecutive intervening points, respectively,
@@ -338,7 +410,7 @@ public class CMV{
             double n2 = utils.euclideanNorm(x2, y2, x3, y3);
 
             // Calculate the cosine of the angle between the vectors
-            double cosineAngle = utils.dotProduct(x1, y1, x2, y2, x3, y3) / (Math.abs(n1) * Math.abs(n2));
+            double cosineAngle = LICutils.dotProduct(x1, y1, x2, y2, x3, y3) / (Math.abs(n1) * Math.abs(n2));
 
             // Calculate the angle in radians
             double angle = Math.acos(cosineAngle);
@@ -352,7 +424,7 @@ public class CMV{
 
         return false;
     }
-
+                    
     public static Boolean LIC7(Parameters param) {
         // Return true if there exists at least one set of two data points separated by
         // exactly K_PTS consecutive intervening points that are a distance greater than
@@ -388,6 +460,7 @@ public class CMV{
     }
 
     public static Boolean LIC10(Parameters param) {
+
         // Return true if there exists at least one set of three data points
         // separated by exactly E_PTS and F_PTS consecutive intervening points,
         // respectively, that are the vertices of a triangle with area greater than AREA1.
@@ -423,7 +496,6 @@ public class CMV{
                 return true;
             }
         }
-
         return false;
     }
 
@@ -477,7 +549,8 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC11(Parameters param) {
+
+    public static Boolean LIC11(Parameters params) {
         // Return true if there exists at least one set of two data points,
         // (X[i],Y[i]) and (X[j],Y[j]), separated by exactly G_PTS
         // consecutive intervening points, such that X[j] - X[i] < 0. (where i < j )
@@ -493,6 +566,7 @@ public class CMV{
         if(params.getG_PTS() > params.getNUMPOINTS() - 2) { return false; }
         if(params.getNUMPOINTS() < 3) { return false; }
 
+      
         for(int i = 0; i < params.getNUMPOINTS() - (params.getG_PTS() + 1); i++) {
             int j = i + 1 + params.getG_PTS();
             System.out.println((params.getX_PTS()[j] - params.getX_PTS()[i]) + " < 0 ");
@@ -504,13 +578,13 @@ public class CMV{
 
         return false;
     }
-
+    
     public CMV() {
         
     }
 
     public static boolean[] initCMV(Parameters param) {
-
+      
         boolean[] cmv = new boolean[15];
 
         for(int i = 0; i < 15; i++) {
