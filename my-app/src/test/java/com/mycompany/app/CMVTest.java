@@ -1,6 +1,5 @@
 package com.mycompany.app;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -45,6 +44,7 @@ public class CMVTest
                             0.0,
                             0.0
                             );
+ 
 
         for(int i = 0; i < NUMPOINTS; i++) {
             x_pts[i] = i;
@@ -56,4 +56,28 @@ public class CMVTest
             assertFalse("LIC" + licNum, cmv[licNum]);
         }
     }
+
+    @Test
+    public void valid_input_LIC_3_false_area_less_than_param() {
+        int[] x_pts = new int[] {0,1,1,2};
+        int[] y_pts = new int[] {0,1,0,0};
+    }
+
+    @Test
+    public void valid_input_LIC_3_true_area_more_than_param() {
+        int[] x_pts = new int[] {0,1,3,5,7,9};
+        int[] y_pts = new int[] {0,1,0,3,0,3};
+
+
+    }
+
+    @Test
+    public void invalid_input_LIC_3_throws_error_too_few_points() {
+        int[] x_pts = new int[] {0,1};
+        int[] y_pts = new int[] {0,1};
+        
+    }
+
+
+
 }
