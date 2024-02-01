@@ -99,6 +99,10 @@ To run the project, like above with building, we recommend being in the project 
 ### Robin Eggestig
 
 ### Anton Sederlin
+- Initiated the project file structure through maven
+- Implemented LIC conditions 0,1 & 2 and wrote the corresponding tests.
+- Implemented automated webb documentation with javadoc. 
+- Reviewed several pull requests and assisted with pair programming when needed. 
 
 ### Tsz Ho Wat
 
