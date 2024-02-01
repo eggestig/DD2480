@@ -45,7 +45,14 @@ public class CMV {
         // 1 ≤ C_PTS, 1 ≤ D_PTS
         // C_PTS + D_PTS ≤ NUMPOINTS−3
 
-        //TODO: Throw errors here if invalid input
+        /* 
+        * Specification requirements & Edge cases
+        */
+        if(1 > params.getC_PTS()) { return false; }
+        if(1 > params.getD_PTS()) { return false; }
+        if((params.getC_PTS() + params.getD_PTS()) > params.getNUMPOINTS() - 3) { return false; }
+        if(params.getNUMPOINTS() < 5) { return false; }
+
 
         for(int i = 0; i < params.getNUMPOINTS() - (params.getC_PTS() + params.getD_PTS() + 2); i++) {
             int j = i + 1 + params.getC_PTS();
@@ -57,6 +64,8 @@ public class CMV {
             double y2 = params.getY_PTS()[j]; // Vertex
             double x3 = params.getX_PTS()[k];
             double y3 = params.getY_PTS()[k];
+
+            if((x1 == x2 && y1 == y2) || (x3 == x2 && y3 == y2)) { return false; }
 
             double n1 = utils.euclideanNorm(x1, y1, x2, y2);
             double n2 = utils.euclideanNorm(x2, y2, x3, y3);
@@ -77,7 +86,7 @@ public class CMV {
         return false;
     }
 
-    public static Boolean LIC10(Parameters param) {
+    public static Boolean LIC10(Parameters params) {
         // Return true if there exists at least one set of three data points
         // separated by exactly E_PTS and F_PTS consecutive intervening points,
         // respectively, that are the vertices of a triangle with area greater than AREA1.
@@ -88,31 +97,37 @@ public class CMV {
         // E_PTS + F_PTS ≤ NUMPOINTS − 3
 
 
-        //TODO: Throw errors here if invalid input
-        if(param.getX_PTS().length < 5 || param.getY_PTS().length < 5) {return false;}
+        /* 
+        * Specification requirements & Edge cases
+        */
+        if(1 > params.getE_PTS()) { return false; }
+        if(1 > params.getF_PTS()) { return false; }
+        if((params.getE_PTS() + params.getF_PTS()) > params.getNUMPOINTS() - 3) { return false; }
+        if(params.getNUMPOINTS() < 5) { return false; }
 
-        for(int i = 0; i < param.getNUMPOINTS() + (param.getE_PTS() + param.getF_PTS()); i++) {
-            for(int j = i + param.getE_PTS(); j < param.getNUMPOINTS() - param.getF_PTS(); j++) {
-                for(int k = j + param.getF_PTS(); k < param.getNUMPOINTS(); k++) {
+        for(int i = 0; i < params.getNUMPOINTS() - (params.getE_PTS() + params.getF_PTS() + 2); i++) {
+            int j = i + 1 + params.getE_PTS();
+            int k = j + 1 + params.getF_PTS();
                 
-                    double x1 = param.getX_PTS()[i];
-                    double y1 = param.getY_PTS()[i];
-                    double x2 = param.getX_PTS()[j]; // Vertex
-                    double y2 = param.getY_PTS()[j]; // Vertex
-                    double x3 = param.getX_PTS()[k];
-                    double y3 = param.getY_PTS()[k];
-
-                    if(0.5 * Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) > param.getAREA1()) {
-                        return true;
-                    }
-                }
+            double x1 = params.getX_PTS()[i];
+            double y1 = params.getY_PTS()[i];
+            double x2 = params.getX_PTS()[j]; // Vertex
+            double y2 = params.getY_PTS()[j]; // Vertex
+            double x3 = params.getX_PTS()[k];
+            double y3 = params.getY_PTS()[k];
+                
+            //System.out.println((0.5 * Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2))) + " > " + params.getAREA1());
+            //System.out.flush(); 
+            
+            if(0.5 * Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) > params.getAREA1()) {
+                return true;
             }
         }
 
         return false;
     }
 
-    public static Boolean LIC11(Parameters param) {
+    public static Boolean LIC11(Parameters params) {
         // Return true if there exists at least one set of two data points,
         // (X[i],Y[i]) and (X[j],Y[j]), separated by exactly G_PTS
         // consecutive intervening points, such that X[j] - X[i] < 0. (where i < j )
@@ -121,15 +136,20 @@ public class CMV {
         // The condition is not met when NUMPOINTS < 3.
         // 1 ≤ G_PTS ≤ NUMPOINTS−2
 
-        //TODO: Throw errors here if invalid input
+        /* 
+        * Specification requirements & Edge cases
+        */
+        if(1 > params.getG_PTS()) { return false; }
+        if(params.getG_PTS() > params.getNUMPOINTS() - 2) { return false; }
+        if(params.getNUMPOINTS() < 3) { return false; }
 
-        if(param.getX_PTS().length < 3 || param.getY_PTS().length < 3) {return false;}
 
-        for(int i = 0; i < param.getNUMPOINTS() - param.getG_PTS(); i++) {
-            for(int j = i + param.getG_PTS(); j < param.getNUMPOINTS(); j++) {
-                if(param.getX_PTS()[j] - param.getX_PTS()[i] < 0) {
-                    return true;
-                }
+        for(int i = 0; i < params.getNUMPOINTS() - (params.getG_PTS() + 1); i++) {
+            int j = i + 1 + params.getG_PTS();
+            System.out.println((params.getX_PTS()[j] - params.getX_PTS()[i]) + " < 0 ");
+            System.out.flush(); 
+            if(params.getX_PTS()[j] - params.getX_PTS()[i] < 0) {
+                return true;
             }
         }
 
