@@ -46,7 +46,7 @@ public class App {
             19.0
         );
 
-        boolean[] cmv = CMV.initCMV(param, param.getNUMPOINTS(), param.getX_PTS(), param.getY_PTS());
+        boolean[] cmv = CMV.initCMV(param);
 
         int k = 0;
         for(boolean lic : cmv) {
