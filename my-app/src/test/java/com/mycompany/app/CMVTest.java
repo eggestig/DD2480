@@ -69,33 +69,103 @@ public class CMVTest
 
     @Test
     public void valid_input_LIC_3_false_area_less_than_param() {
-        Parameters param = new Parameters();
+        Parameters params = new Parameters();
         double[] x_pts = new double[] {0,1,1,2};
         double[] y_pts = new double[] {0,1,0,0};
-        param.setX_PTS(x_pts);
-        param.setY_PTS(y_pts);
-
+        params.setX_PTS(x_pts);
+        params.setY_PTS(y_pts);
+        params.setNUMPOINTS(4);
+        params.setAREA1(2);
+        assertFalse("LIC3", CMV.LIC3(params));
     }
 
     @Test
     public void valid_input_LIC_3_true_area_more_than_param() {
-        Parameters param = new Parameters();
+        Parameters params = new Parameters();
         double[] x_pts = new double[] {0,1,3,5,7,9};
         double[] y_pts = new double[] {0,1,0,3,0,3};
-        param.setX_PTS(x_pts);
-        param.setY_PTS(y_pts);
+        params.setX_PTS(x_pts);
+        params.setY_PTS(y_pts);
+        params.setNUMPOINTS(6);
+        params.setAREA1(2);
+        assertTrue("LIC3", CMV.LIC3(params));
     }
 
     @Test
     public void invalid_input_LIC_3_throws_error_too_few_points() {
-        Parameters param = new Parameters();
+        Parameters params = new Parameters();
         double[] x_pts = new double[] {0,1};
         double[] y_pts = new double[] {0,1};
-        param.setX_PTS(x_pts);
-        param.setY_PTS(y_pts);
+        params.setX_PTS(x_pts);
+        params.setY_PTS(y_pts);
+        params.setNUMPOINTS(2);
+        params.setAREA1(2);
+        assertFalse("LIC3", CMV.LIC3(params));
+    }
+
+    @Test
+    public void valid_input_LIC_4_true_points_in_different_quadrants() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {1,-1,-1,1});
+        params.setY_PTS(new double[] {1,1,-1,-1});
+        params.setNUMPOINTS(4);
+        params.setQUADS(2);
+        params.setQ_PTS(3);
+        System.out.println("valid_input_LIC_4_true_points_in_different_quadrants");
+        assertTrue("LIC4", CMV.LIC4(params));
+    }
+
+    @Test
+    public void valid_input_LIC_4_false_all_points_in_same_quadrant() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {0,1,3,0});
+        params.setY_PTS(new double[] {0,9,5,1});
+        params.setNUMPOINTS(4);
+        params.setQUADS(2);
+        params.setQ_PTS(2);
+        System.out.println("valid_input_LIC_4_false_all_points_in_same_quadrant");
+        assertFalse("LIC4", CMV.LIC4(params));
         
+    }
+
+    @Test
+    public void invalid_input_LIC_4_throws_error_too_few_points() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {});
+        params.setY_PTS(new double[] {});
+        params.setQ_PTS(1);
+        params.setNUMPOINTS(0);
+        System.out.println("invalid_input_LIC_4_throws_error_too_few_points");
+        assertFalse("LIC4", CMV.LIC4(params));
+    }
+
+    @Test
+    public void invalid_input_LIC_4_throws_error_Q_is_nonpositive() {
+        Parameters params = new Parameters();
+        params.setQUADS(-1);
+        System.out.println("invalid_input_LIC_4_throws_error_Q_is_nonpositive");
+        assertFalse("LIC4", CMV.LIC4(params));
     }
 
 
 
+    //Test LIC 9 throws InvalidParameterException for invalid N_PTS
+    //Invalid N_PTS if N_PTS < 3
+    @Test
+    public void valid_input_LIC_9_() {
+        Parameters params = new Parameters();
+        params.setNUMPOINTS(6);
+        params.setC_PTS(1);
+        params.setD_PTS(2);
+        params.setX_PTS(new double[]{1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
+        params.setY_PTS(new double[]{-1.0, -2.0, -3.0, -4.0, -5.0, -6.0});
+        params.setEPSILON(-1.0);
+
+        System.out.println("");
+        System.out.println("[TEST]");
+        System.out.println("");
+        System.out.flush(); 
+
+        assertTrue("LIC9", CMV.LIC9(params));
+    }
 }
