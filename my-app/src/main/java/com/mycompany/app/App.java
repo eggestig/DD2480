@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class App {
     static Parameters param;
-    static Boolean[] cmv = new Boolean[15];
+    static Boolean[] cmv;
     static int NUMPOINTS;
     static int[] x_pts;
     static int[] y_pts;
@@ -43,8 +43,18 @@ public class App {
             x_pts[i] = i;
             y_pts[i] = i;
         }
+
+        cmv = CMV.initCMV(param, NUMPOINTS, x_pts, y_pts);
+
+        int k = 0;
+        for(Boolean lic : cmv) {
+            System.out.println("LIC" + k + '\t' + lic);
+            k++;
+        }
         
         System.out.println("Parameters created");
+
+
 
         int i;
         int j;
