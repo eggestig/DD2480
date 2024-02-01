@@ -599,10 +599,10 @@ public class CMV{
     }
     
     public CMV() {
-        
+
     }
 
-    public static boolean[] initCMV(Parameters param) {
+    public static boolean[] compute(Parameters param) {
       
         boolean[] cmv = new boolean[15];
 

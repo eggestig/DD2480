@@ -62,7 +62,7 @@ public class CMVTest
         );
 
         boolean[] cmv;
-        cmv = CMV.initCMV(param);
+        cmv = CMV.compute(param);
         for(int licNum = 0; licNum < cmv.length; licNum++) {
             //assertFalse("LIC" + licNum, cmv[licNum]);
         }

@@ -5,6 +5,8 @@ import java.util.Arrays;
 public class App {
     static Parameters param;
     static boolean[] cmv;
+    static CONNECTORS[][] lcm;
+    static boolean[] puv;
     static int NUMPOINTS;
     static double[] x_pts;
     static double[] y_pts;
@@ -12,41 +14,57 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         /* Create default "global" variables */
-        Random rand = new Random();
-        int numpoints = rand.nextInt(100 - 2) + 2;
-        double[] x_pts = new double[numpoints];
-        double[] y_pts = new double[numpoints];
+        // Random rand = new Random();
+        // int numpoints = rand.nextInt(100 - 2) + 2;
+        // double[] x_pts = new double[numpoints];
+        // double[] y_pts = new double[numpoints];
+
+        InputParser inputparser = new InputParser(args[0]);
+        inputparser.Parse();
+
+        System.out.println("NUMBERS: " + inputparser.getParameters().getNUMPOINTS());
+
+        param = inputparser.getParameters();
+        lcm = inputparser.getLCM();
+        puv = inputparser.getPUV();
+    
 
         // Fill arrays
-        Arrays.fill(x_pts, 0);
-        Arrays.fill(y_pts, 1);
+        // Arrays.fill(x_pts, 0);
+        // Arrays.fill(y_pts, 1);
 
-        Parameters param = new Parameters(
-            numpoints,
-            x_pts,
-            y_pts,
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5,
-            6,
-            7.0,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17.0,
-            18.0,
-            19.0
-        );
+        boolean[] cmv = CMV.compute(param);
 
-        boolean[] cmv = CMV.initCMV(param);
+        // CONNECTORS[][] sampleLCM = {
+        //     {CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR},
+        //     {CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR},
+        //     {CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR},
+        //     {CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR},
+        //     {CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR},
+        //     {CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ORR},
+        //     {CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR},
+        //     {CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR},
+        //     {CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ORR},
+        //     {CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR},
+        //     {CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR},
+        //     {CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ORR},
+        //     {CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.ORR, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.ORR},
+        //     {CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ANDD, CONNECTORS.NOTUSED, CONNECTORS.NOTUSED, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.NOTUSED, CONNECTORS.ORR},
+        //     {CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.ORR, CONNECTORS.NOTUSED}
+        //  };
+
+
+        PUM pum = new PUM();
+        pum.receive_CMV(cmv);
+        pum.receive_LCM(lcm);
+        pum.generate_PUM();
+
+        pum.displayPUM();
+        
+        // String[][] stringPUM = pum.getStringPUM();
+        boolean[][] booleanPUM = pum.getPUM();
+   
+
 
         int k = 0;
         for(boolean lic : cmv) {
@@ -63,18 +81,19 @@ public class App {
 
         // Generate random PUM - preliminary unlocking matrix
         int len = 15;
-        int[][] pum = new int[len][len];
-        for (i = 0; i < len; i++) {
-            for  (j = 0; j < len; j++) {
-                pum[i][j] = rand.nextInt(2);
-            }
-        }
+        // int[][] pum = new int[len][len];
+        // for (i = 0; i < len; i++) {
+        //     for  (j = 0; j < len; j++) {
+        //         pum[i][j] = rand.nextInt(2);
+        //     }
+        // }
 
-        // Generate PUV - preliminary unlocking vector
-        int[] puv = new int[len];
-        for (i = 0; i < len; i++) {
-            puv[i] = rand.nextInt(1);
-        }
+        //Generate PUV - preliminary unlocking vector
+        // int[] puv = new int[len];
+        // for (i = 0; i < len; i++) {
+        //     puv[i] = rand.nextInt(2);
+        //     System.out.print(" " + puv[i]);
+        // }
 
         // Extract FUV - final unlocking vector
         // System.out.println("FUV: ");
@@ -82,7 +101,7 @@ public class App {
         for (i = 0; i < len; i++) {
 
             // Condition 1
-            if (puv[i]==0) {
+            if (puv[i]==false) {
                 fuv[i] = 1;
                 //System.out.print(fuv[i] + (" "));
                 continue;
@@ -95,7 +114,10 @@ public class App {
                 unlock = 0;
 
                 for (j = 0; j < len; j++) {
-                    if (pum[i][j]==1) {
+                    if (i==j) {
+                        continue;
+                    }
+                    if (booleanPUM[i][j]==true) {
                         unlock = unlock + 1;
                     }
                 }
@@ -107,5 +129,15 @@ public class App {
                // System.out.print(fuv[i] + (" "));
             }  
         }
+
+        System.out.println("Do we want to launch the missile?");
+        for (i = 0; i < len; i++) {
+            if (fuv[i]==0) {
+                System.out.println("");
+                System.out.println("NO");
+                return;
+            }
+        }
+        System.out.println("YES");
     }
 }

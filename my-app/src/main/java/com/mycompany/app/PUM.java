@@ -4,7 +4,7 @@ public class PUM extends GenerateRandomSamples {
 
 
     private boolean[][] matrix;
-    private String[][] LCM;
+    private CONNECTORS[][] LCM;
     private boolean[] CMV;
 
     // Constructor
@@ -13,14 +13,18 @@ public class PUM extends GenerateRandomSamples {
         matrix = new boolean[15][15];
     }
 
-    public void receive_LCM(String[][] lcm) {
+    public boolean[][] getPUM() {
+        return matrix;
+    }
+
+    public void receive_LCM(CONNECTORS[][] lcm) {
         if (lcm.length != 15 || lcm[0].length != 15) {
             // Throw an exception or handle the error as needed
             throw new IllegalArgumentException("Invalid LCM dimensions. Should be 15x15.");
         }
 
         // Copy the contents of lcm to LCM
-        LCM = new String[15][15];
+        LCM = new CONNECTORS[15][15];
         for (int i = 0; i < 15; i++) {
             System.arraycopy(lcm[i], 0, LCM[i], 0, 15);
         }
@@ -51,7 +55,7 @@ public class PUM extends GenerateRandomSamples {
         for (int i = 0; i < 15; i++) {
             for (int j = i; j < 15; j++) {
                 // If LCM[i,j] is NOTUSED, set PUM[i,j] to true
-                if (LCM[i][j].equals("NOTUSED")) {
+                if (LCM[i][j].equals(CONNECTORS.NOTUSED)) {
                     matrix[i][j] = true;
                     matrix[j][i] = true;
                 } else {
@@ -65,11 +69,11 @@ public class PUM extends GenerateRandomSamples {
     }
 
     // Helper method to compute the result based on the boolean operator
-    private boolean computeResult(boolean operand1, boolean operand2, String operator) {
+    private boolean computeResult(boolean operand1, boolean operand2, CONNECTORS operator) {
         switch (operator) {
-            case "ANDD":
+            case ANDD:
                 return operand1 && operand2;
-            case "ORR":
+            case ORR:
                 return operand1 || operand2;
             default:
                 // Throw an exception or handle the error as needed for unknown operators

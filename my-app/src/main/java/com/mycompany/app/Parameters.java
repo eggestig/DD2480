@@ -1,6 +1,5 @@
 package com.mycompany.app;
 
-
 public class Parameters {
     private int NUMPOINTS;
     private double[] X_PTS;
@@ -25,7 +24,8 @@ public class Parameters {
     private double RADIUS2;
     private double AREA2;
     public final double PI = 3.1415926535;
-    public enum CONNECTORS { NOTUSED, ORR, AAND };
+    //public enum CONNECTORS { NOTUSED, ORR, AAND };
+    public enum CONNECTORS_TEST { NOTUSED, ORR, AAND };
     public enum COMPTYPE { LT, EQ, GT } ;
 
     public void setNUMPOINTS(int NUMPOINTS) { this.NUMPOINTS = NUMPOINTS; }
