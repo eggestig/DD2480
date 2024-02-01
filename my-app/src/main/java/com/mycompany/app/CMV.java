@@ -105,6 +105,12 @@ public class CMV {
         // (where i = j-1).
         // Else return false.
 
+        if (params.getX_PTS().length<2 || params.getY_PTS().length<2 || params.getNUMPOINTS() < 2) {
+            System.out.println("Error");
+            return false;
+        }
+        System.out.println("Continued !!!");
+
         for(int i = 0; i < params.getNUMPOINTS(); i++) {
             for(int j = i + 1; j < params.getNUMPOINTS(); j++) {
                 if(params.getX_PTS()[j] - params.getX_PTS()[i] < 0) {

@@ -111,7 +111,6 @@ public class CMVTest
         params.setNUMPOINTS(4);
         params.setQUADS(2);
         params.setQ_PTS(3);
-        System.out.println("valid_input_LIC_4_true_points_in_different_quadrants");
         assertTrue("LIC4", CMV.LIC4(params));
     }
 
@@ -123,7 +122,6 @@ public class CMVTest
         params.setNUMPOINTS(4);
         params.setQUADS(2);
         params.setQ_PTS(2);
-        System.out.println("valid_input_LIC_4_false_all_points_in_same_quadrant");
         assertFalse("LIC4", CMV.LIC4(params));
         
     }
@@ -135,7 +133,6 @@ public class CMVTest
         params.setY_PTS(new double[] {});
         params.setQ_PTS(1);
         params.setNUMPOINTS(0);
-        System.out.println("invalid_input_LIC_4_throws_error_too_few_points");
         assertFalse("LIC4", CMV.LIC4(params));
     }
 
@@ -143,10 +140,38 @@ public class CMVTest
     public void invalid_input_LIC_4_throws_error_Q_is_nonpositive() {
         Parameters params = new Parameters();
         params.setQUADS(-1);
-        System.out.println("invalid_input_LIC_4_throws_error_Q_is_nonpositive");
         assertFalse("LIC4", CMV.LIC4(params));
     }
 
+    @Test
+    public void valid_input_true_LIC_5() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {5,4,3,2,1});
+        params.setY_PTS(new double[] {1,2,3,4,5});
+        params.setNUMPOINTS(5);
+        System.out.println("True case LIC5");
+        assertTrue("LIC5", CMV.LIC5(params));
+    }
+
+    @Test
+    public void valid_input_false_LIC_5() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {1,2,3,4,5});
+        params.setY_PTS(new double[] {1,2,3,4,5});
+        params.setNUMPOINTS(5);
+        assertFalse("LIC5", CMV.LIC5(params));
+    }
+
+    @Test
+    public void invalid_input_LIC_5_too_few_points() {
+        Parameters params = new Parameters();
+        params.setNUMPOINTS(1);
+        params.setX_PTS(new double[] {1});
+        params.setY_PTS(new double[] {1});
+        assertFalse("LIC5", CMV.LIC5(params));
+    }
+
+    
 
 
     //Test LIC 9 throws InvalidParameterException for invalid N_PTS
