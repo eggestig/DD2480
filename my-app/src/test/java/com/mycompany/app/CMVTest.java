@@ -70,7 +70,7 @@ public class CMVTest
 
     // Test LIC 5 returns false if not two consecutive points exist with decreasing x
     @Test
-    public void valid_input_LIC_5_no_two_consecutive_points_with_decreasing_x_returns_false() {
+    public void yes_instance_LIC_5_no_two_consecutive_points_with_decreasing_x_returns_false() {
         
         double[] x_pts = new double[]{0.0, 1.0};
         double[] y_pts = new double[]{0.0, 1.0};
@@ -89,7 +89,7 @@ public class CMVTest
 
     // Test LIC 5 returns true if two consecutive points exist with decreasing x
     @Test
-    public void valid_input_LIC_5_two_consecutive_points_with_decreasing_x_returns_true() {
+    public void yes_instance_LIC_5_two_consecutive_points_with_decreasing_x() {
         
         double[] x_pts = new double[]{1.0, 0.0};
         double[] y_pts = new double[]{0.0, 1.0};
@@ -111,7 +111,7 @@ public class CMVTest
     // the line joining the first and last of these N_PTS points.
     // (3 ≤ N_PTS ≤ NUMPOINTS), (0 ≤ DIST)
     @Test
-    public void valid_input_LIC_6_n_points_exist_where_one_point_lies_valid_distance_from_line_joining_first_and_last_n_points_returns_true() {
+    public void yes_instance_LIC_6_at_least_one_point_valid_dist_from_line() {
         
         double[] x_pts = new double[]{0.0, 100.0, 1.0};
         double[] y_pts = new double[]{0.0, 100.0, 1.0};
@@ -119,7 +119,7 @@ public class CMVTest
         double dist = 1;
         
         Parameters param = new Parameters();
-        param.setNUMPOINTS(2);
+        param.setNUMPOINTS(3);
         param.setX_PTS(x_pts);
         param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
@@ -135,7 +135,7 @@ public class CMVTest
     // such that at least one of the points lies a distance greater than DIST from
     // the line joining the first and last of these N_PTS points.
     @Test
-    public void valid_input_LIC_6_n_points_no_one_point_lies_valid_distance_from_line_joining_first_and_last_n_points_returns_false() {
+    public void no_instance_LIC_6_no_one_point_lies_valid_distance_from_line() {
         
         double[] x_pts = new double[]{0.0, 1.1, 1.0};
         double[] y_pts = new double[]{0.0, 1.1, 1.0};
@@ -143,7 +143,7 @@ public class CMVTest
         double dist = 100;
         
         Parameters param = new Parameters();
-        param.setNUMPOINTS(2);
+        param.setNUMPOINTS(3);
         param.setX_PTS(x_pts);
         param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
@@ -155,17 +155,17 @@ public class CMVTest
 
     }
 
-    //Test LIC 6 returns false for invalid N_PTS
-    //Invalid N_PTS if N_PTS < 3
+    // Test LIC 6 returns false for invalid N_PTS
+    // Invalid N_PTS if N_PTS < 3
     @Test
-    public void invalid_input_LIC_6_N_PTS_less_than_3_throws_invalid_N_PTS_exception() {
+    public void no_instance_LIC_6_N_PTS_less_than_3() {
         double[] x_pts = new double[]{0.0, 100.0, 1.0};
         double[] y_pts = new double[]{0.0, 100.0, 1.0};
         int n_pts = 0;
         double dist = 1;
         
         Parameters param = new Parameters();
-        param.setNUMPOINTS(2);
+        param.setNUMPOINTS(3);
         param.setX_PTS(x_pts);
         param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
@@ -176,17 +176,17 @@ public class CMVTest
         assertFalse("LIC 6", cmv.LIC6(param));
     }
 
-    //Test LIC 6 returns false for invalid N_PTS
-    //Invalid N_PTS if N_PTS > NUMPOINTS
+    // Test LIC 6 returns false for invalid N_PTS
+    // Invalid N_PTS if N_PTS > NUMPOINTS
     @Test
-    public void invalid_input_LIC_6_N_PTS_less_than_3_throws_invalid_N_PTS_exception() {
+    public void no_instance_LIC_6_N_PTS_greater_than_NUMPOINTS() {
         double[] x_pts = new double[]{0.0, 100.0, 1.0};
         double[] y_pts = new double[]{0.0, 100.0, 1.0};
         int n_pts = 10;
         double dist = 1;
         
         Parameters param = new Parameters();
-        param.setNUMPOINTS(2);
+        param.setNUMPOINTS(3);
         param.setX_PTS(x_pts);
         param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
@@ -195,6 +195,163 @@ public class CMVTest
         CMV cmv = new CMV();
 
         assertFalse("LIC 6", cmv.LIC6(param));
+    }
+
+
+    // Test LIC 7 return true if there exists at least one set of two data points separated by
+    // exactly K_PTS consecutive intervening points that are a distance greater than
+    // the length, LENGTH1, apart.
+    @Test
+    public void yes_instance_LIC_7_two_points_seperated_by_valid_dist() {
+        double[] x_pts = new double[]{0.0, 1.0, 100.0};
+        double[] y_pts = new double[]{0.0, 1.0, 100.0};
+        int k_pts = 1;
+        double length1 = 1;
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(3);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setK_PTS(k_pts);
+        param.setLENGTH1(length1);
+
+        CMV cmv = new CMV();
+
+        assertTrue("LIC 7", cmv.LIC7(param));
+    }
+
+    // Test LIC 7 return false if there does not exist at least one set of two data points separated by
+    // exactly K_PTS consecutive intervening points that are a distance greater than
+    // the length, LENGTH1, apart.
+    @Test
+    public void no_instance_LIC_7_no_two_points_exist_seperated_by_valid_dist() {
+        double[] x_pts = new double[]{0.0, 1.0, 2.0};
+        double[] y_pts = new double[]{0.0, 1.0, 2.0};
+        int k_pts = 1;
+        double length1 = 100;
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(3);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setK_PTS(k_pts);
+        param.setLENGTH1(length1);
+
+        CMV cmv = new CMV();
+
+        assertFalse("LIC 7", cmv.LIC7(param));
+    }
+
+    // Test LIC 7 returns false if invalid K_PTS
+    // invalid K_PTS if K_PTS > NUMPOINTS - 2
+    @Test
+    public void no_instance_LIC_7_K_PTS_exceede_valid_range() {
+        double[] x_pts = new double[]{0.0, 1.0, 2.0};
+        double[] y_pts = new double[]{0.0, 1.0, 2.0};
+        int k_pts = 10;
+        double length1 = 100;
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(3);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setK_PTS(k_pts);
+        param.setLENGTH1(length1);
+
+        CMV cmv = new CMV();
+
+        assertFalse("LIC 7", cmv.LIC7(param));
+    }
+
+    // Test LIC 7 returns false if invalid K_PTS
+    // invalid K_PTS if K_PTS < 1
+    @Test
+    public void no_instance_LIC_7_K_PTS_less_than_one() {
+        double[] x_pts = new double[]{0.0, 1.0, 2.0};
+        double[] y_pts = new double[]{0.0, 1.0, 2.0};
+        int k_pts = 0;
+        double length1 = 100;
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(3);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setK_PTS(k_pts);
+        param.setLENGTH1(length1);
+
+        CMV cmv = new CMV();
+
+        assertFalse("LIC 7", cmv.LIC7(param));
+    }
+
+    // Test LIC 8 return true if there exists at least one set of three data points
+    // separated by exactly A_PTS and B_PTS consecutive intervening points,
+    // respectively, that cannot be contained within or on a circle of radius RADIUS1.
+
+    @Test
+    public void yes_instance_LIC_8_three_points_outside_circle() {
+        double[] x_pts = new double[]{0.0, 1.0, 100.0, 2.0, -100.0};
+        double[] y_pts = new double[]{0.0, 1.0, 100.0, 2.0, -100.0};
+        int a_pts = 1;
+        int b_pts = 1;
+        double radius1 = 2;
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(5);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setA_PTS(a_pts);
+        param.setB_PTS(b_pts);
+        param.setRADIUS1(radius1);
+        
+        CMV cmv = new CMV();
+        
+        assertTrue("LIC 8", cmv.LIC8(param));
+    }
+
+    // Test LIC 8 returns false when condition not met.
+    // Condition not met when NUMPOINTS < 5
+    @Test
+    public void no_instance_LIC_8_invalid_NUMPOINTS() {
+        double[] x_pts = new double[]{0.0};
+        double[] y_pts = new double[]{0.0};
+        int a_pts = 1;
+        int b_pts = 1;
+        double radius1 = 2;
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(1);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setA_PTS(a_pts);
+        param.setB_PTS(b_pts);
+        param.setRADIUS1(radius1);
+
+        CMV cmv = new CMV();
+
+        assertFalse("LIC 8", cmv.LIC8(param));
+    }
+
+    // Test LIC 8 returns false when A_PTS + B_PTS > NUMPOINTS - 3
+    @Test
+    public void no_instance_LIC_8_invalid_A_PTS_AND_B_PTS() {
+        double[] x_pts = new double[]{0.0, 1.0, 100.0, 2.0, -100.0};
+        double[] y_pts = new double[]{0.0, 1.0, 100.0, 2.0, -100.0};
+        int a_pts = 2;
+        int b_pts = 2;
+        double radius1 = 2;
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(5);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setA_PTS(a_pts);
+        param.setB_PTS(b_pts);
+        param.setRADIUS1(radius1);
+        
+        CMV cmv = new CMV();
+        
+        assertFalse("LIC 8", cmv.LIC8(param));
     }
 
     //Test LIC 9 throws InvalidParameterException for invalid N_PTS

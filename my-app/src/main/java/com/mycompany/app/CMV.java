@@ -14,14 +14,14 @@ public class CMV {
         switch(LIC_num) {
             case(0):
                 return LIC0(param);
-            case(5):
-                return LIC5(param);
-            case(6):
-                return LIC6(param);
-            case(7):
-                return LIC7(param);
-            case(8):
-                return LIC8(param);
+            // case(5):
+            //     return LIC5(param);
+            // case(6):
+            //     return LIC6(param);
+            // case(7):
+            //     return LIC7(param);
+            // case(8):
+            //     return LIC8(param);
             default:
                 return false;
             }
@@ -73,20 +73,38 @@ public class CMV {
         double dist = param.getDIST();
         int n_pts = param.getN_PTS();
         
-        if(x_pts.length < 3 || y_pts.length < 3) {return false;}
-
+        if(x_pts.length < 3 || y_pts.length < 3) {
+            return false;
+        }
+        
         if(n_pts < 3 || n_pts > numPoints || dist < 0) {
             return false;
         }
 
-        for(int i = 0; i < numPoints - n_pts; i++) {
-            for(int j = i + 1; j < n_pts; j++) {
-                if(utils.distToLine(x_pts[j], y_pts[j], x_pts[i], y_pts[i], x_pts[i + n_pts], y_pts[i + n_pts]) > dist) {
+        for(int i = 0; i < numPoints; i++) {
+            if(i + n_pts - 1 >= numPoints) {
+                return false;
+            }
+            for(int j = i + 1; j < i + n_pts - 1; j++) {
+                double x1 = x_pts[i];
+                double y1 = y_pts[i];
+                double x2 = x_pts[j];
+                double y2 = y_pts[j];
+                double x3 = x_pts[i + n_pts - 1];
+                double y3 = y_pts[i + n_pts - 1];
+                if(x1 == x3 && y1 == y3) {
+                    if(utils.dist(x1, y1, x2, y2) > dist) {
+                        return true;
+                    }
+                } else if(utils.distToLine(x1, y1, x2, y2, x3, y3) > dist) {
                     return true;
                 }
             }
         }
+
+        return  false;
     }
+
     public static boolean LIC9(Parameters params) {
         // Return true if there exists at least one set of three data points separated by
         // exactly C_PTS and D_PTS consecutive intervening points, respectively,
@@ -150,10 +168,15 @@ public class CMV {
             return false;
         }
 
-        if(x_pts.length < 3 || y_pts.length < 3) {return false;}
+        if(x_pts.length < 3 || y_pts.length < 3) {
+            return false;
+        }
         
+
+        System.out.flush();
         for(int i = 0; i < numPoints - k_pts - 1; i++) {
             if(utils.dist(x_pts[i], y_pts[i], x_pts[i + k_pts + 1], y_pts[i + k_pts + 1]) > length1) {
+
                 return true;
             }
         }
@@ -218,7 +241,9 @@ public class CMV {
             return false;
         }
 
-        if(x_pts.length < 5 || y_pts.length < 5) {return false;}
+        if(x_pts.length < 5 || y_pts.length < 5) {
+            return false;
+        }
 
         for(int i = 0; i < numPoints - (a_pts + b_pts); i++) {
             for(int j = i + a_pts; j < numPoints - b_pts; j++) {
@@ -231,14 +256,16 @@ public class CMV {
                     Double a = utils.dist(x1, y1, x2, y2);
                     Double b = utils.dist(x2, y2, x3, y3);
                     Double c = utils.dist(x3, y3, x1, y1);
-            
                     if(utils.circumRadius(a, b, c) > radius1) {
                         return true;
                     }
                 }
             }
         }
+
+        return false;
     }
+
     public static Boolean LIC11(Parameters param) {
         // Return true if there exists at least one set of two data points,
         // (X[i],Y[i]) and (X[j],Y[j]), separated by exactly G_PTS
