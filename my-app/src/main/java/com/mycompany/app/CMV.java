@@ -4,7 +4,7 @@ import java.lang.reflect.Parameter;
 import java.util.HashSet;
 import java.util.Arrays;
 
-public class CMV {
+public class CMV{
 
     public static LICutils utils = new LICutils();
 
@@ -22,17 +22,124 @@ public class CMV {
             //     return LIC7(param);
             // case(8):
             //     return LIC8(param);
+            case(12):
+                return LIC12(param);
+            case(13):
+                return LIC13(param);
+            case(14):
+                return LIC14(param);
             default:
                 return false;
             }
     }
 
-    public static boolean LIC0(Parameters param) {
+    private static boolean LIC0(Parameters param) {
         // TODO:
         // Return true if there exists at least one set of two consecutive data points
         // that are a distance greater than the length, LENGTH1, apart.
         // Else return false.
 
+        return false;
+    }
+    //assume all perivous is true
+
+    public static boolean LIC12(Parameters param) {
+        // Return true if there exists at least one set of two data points,
+        // separated by exactly K_PTS consecutive intervening points,
+        // which are a distance greater than the length, LENGTH1, apart.
+        // In addition, there exists at least one set of two data points 
+        // (which can be the same or different from the two data points just mentioned),
+        // separated by exactly K_PTS consecutive intervening points,
+        // that are a distance less than the length, LENGTH2, apart. 
+        // Else return false.
+        
+        // The condition is not met when NUMPOINTS < 3.
+        // 0 ≤ LENGTH2
+
+        int k_pts = param.getK_PTS();
+        double length2 = param.getLENGTH2();
+        
+        if(x_pts.length < 3 || y_pts.length < 3 || Boolean.TRUE.equals(/*!LIC7()*/false)) {return false;}
+        
+        for(int i = 0; i < numPoints - (k_pts + 1); i++) {
+            
+            if(LICutils.dist( x_pts[i],  y_pts[i],  x_pts[i + k_pts +1],  y_pts[i + k_pts +1]) < length2) {
+                return true;
+            }
+            
+        }
+
+        return false;
+    }
+    public static Boolean LIC13(Parameters param) {
+        // Return true if there exists at least one set of three data points,
+        // separated by exactly A_PTS and B_PTS consecutive intervening points,
+        // respectively, that cannot be contained within or on a circle of radius RADIUS1.
+        // In addition, there exists at least one set of three data points
+        // (which can be the same or different from the three data points just mentioned)
+        // separated by exactly A_PTS and B_PTS consecutive intervening points, respectively,
+        // that can be contained in or on a circle of radius RADIUS2. 
+        
+        // The condition is not met when NUMPOINTS < 5.
+        // 0 ≤ RADIUS2
+
+        if(x_pts.length < 5 || y_pts.length < 5 || Boolean.TRUE.equals(/*!LIC8()*/false)) {return false;}
+
+        int a_pts= param.getA_PTS();
+        int b_pts= param.getB_PTS();
+
+        for(int i = 0; i < numPoints - ( a_pts + b_pts+2); i++) {
+ 
+            double x1 = x_pts[i]; double y1 = y_pts[i];
+            double x2 = x_pts[i+a_pts+1]; double y2 = y_pts[i+a_pts+1];
+            double x3 = x_pts[i+a_pts+b_pts+2]; double y3 = y_pts[i+a_pts+b_pts+2];
+    
+            double a = LICutils.dist(x1, y1, x2, y2);
+            double b = LICutils.dist(x2, y2, x3, y3);
+            double c = LICutils.dist(x3, y3, x1, y1);
+    
+            if(LICutils.circumRadius(a, b, c) <= param.getRADIUS2()) {
+                return true;
+
+            }
+       }
+
+        return false;
+    }
+
+    public static Boolean LIC14(Parameters param) {
+        // Return true if there exists at least one set of three data points,
+        // separated by exactly E_PTS and F_PTS consecutive intervening points,
+        // respectively, that are the vertices of a triangle with area greater than AREA1.
+        // In addition, there exist three data points
+        // (which can be the same or different from the three data points just mentioned)
+        // separated by exactly E_PTS and F_PTS consecutive intervening points, respectively,
+        // that are the vertices of a triangle with area less than AREA2.
+        // Both parts must be true for the LIC to be true.
+        // Else return false.
+        
+        // The condition is not met when NUMPOINTS < 5.
+        // 0 ≤ AREA2
+    
+        if(x_pts.length < 5 || y_pts.length < 5 || Boolean.TRUE.equals(/*!LIC10()*/false)) {return false;}
+
+        int e_pts= param.getE_PTS();
+        int f_pts= param.getF_PTS();
+        
+        for(int i = 0; i < numPoints - (e_pts + f_pts +2); i++) {
+            
+            double x1 =  x_pts[i];
+            double y1 =  y_pts[i];
+            double x2 =  x_pts[i+e_pts+1];
+            double y2 =  y_pts[i+e_pts+1];
+            double x3 =  x_pts[i+e_pts+f_pts+2];
+            double y3 =  y_pts[i+e_pts+f_pts+2];
+
+            if(0.5 * Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) < param.getAREA2()) {
+                return true;
+            }
+
+        }
         return false;
     }
 
