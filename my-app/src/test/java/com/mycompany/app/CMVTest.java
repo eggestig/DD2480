@@ -600,6 +600,138 @@ public class CMVTest
         
         assertFalse(CMV.LIC13(param));
     }
+  /**
+     * LIC 0 is provided with only one point and
+     * should return false as the distance between
+     * "2" points is undefinable.
+     */
+    @Test
+    public void invalid_input_LIC_0_one_point()
+    {
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(1);
+        param.setX_PTS(new double[]{1});
+        param.setY_PTS(new double[]{1});
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC0(param));
+    }
+
+    /**
+     * LIC 0 is given two points with dist > (length = 10),
+     * and should return false.
+     */
+    @Test
+    public void valid_Input_LIC_0_two_points_greater_dist()
+    {
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(2);
+        param.setX_PTS(new double[]{1, 20});
+        param.setY_PTS(new double[]{1, 20});
+        param.setLENGTH1(10);
+
+        CMV cmv = new CMV();
+        assertTrue(cmv.LIC0(param));
+    }
+
+    /**
+     * LIC 1 is provided with 3 points not all within a radius of
+     * radius1 = 1 and should return True. 
+     */
+    @Test
+    public void valid_Input_LIC_1_points_in_circle()
+    {
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(3);
+        param.setX_PTS(new double[]{2, 4, 6});
+        param.setY_PTS(new double[]{2, 6, 8});
+        param.setRADIUS1(1);
+
+        CMV cmv = new CMV();
+        assertTrue(cmv.LIC1(param));
+    }
+    
+    /**
+     * The Radius cannot be a negative number, and
+     * should return false.
+     */
+    @Test
+    public void valid_Input_LIC_1_negative_radius()
+    {
+        Parameters param = new Parameters();
+        param.setRADIUS1(-1);
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC1(param));
+    }
+
+
+    /**
+     * This test should return false as only one point
+     * is provided and an angle cant be defined.
+     */
+    @Test
+    public void invalid_input_LIC_2_one_point()
+    {
+        
+        Parameters params = new Parameters();
+        params.setNUMPOINTS(2);
+        params.setX_PTS(new double[]{1,2});
+        params.setY_PTS(new double[]{1,2});
+        params.setEPSILON(1);
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC2(params));
+
+    }
+      /**
+     * This test should return false as epsilon
+     * is too big
+     */
+    @Test
+    public void invalid_input_LIC_2_tooBigEpsilon()
+    {
+        Parameters params = new Parameters();
+        params.setEPSILON(4);
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC2(params));
+    }
+
+      /**
+     * This test should return false as only one point
+     * is provided and an angle cant be defined.
+     */
+    @Test
+    public void invalid_input_LIC_2_negativeEpsilon()
+    {
+        Parameters params = new Parameters();
+        params.setEPSILON(-1);
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC2(params));
+    }
+
+    /**
+     * LIC 2 is provided with 3 data points forming
+     * a 45 degree angel and should return true for
+     * epsilon = pi/2.
+     */
+    @Test
+    public void valid_input_LIC_2_45dAngel()
+    {   
+        Parameters params = new Parameters();
+        params.setNUMPOINTS(3);
+        params.setX_PTS(new double[]{0, 0, -1});
+        params.setY_PTS(new double[]{0, 1, 0});
+        params.setEPSILON(Math.PI / 2);
+
+        CMV cmv = new CMV();
+        assertTrue(cmv.LIC2(params));
+    }
+  
+  
     @Test
     public void valid_input_LIC_14() {
         //true test: x,y[1,5,6] is contain in a 188 area of triangle, with is smaller than area2(250)
@@ -627,7 +759,6 @@ public class CMVTest
             62.88,
             8.05};
         
-
         Parameters param = new Parameters(
             
             10,
