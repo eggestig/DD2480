@@ -22,7 +22,7 @@ public class App {
         Arrays.fill(y_pts, 1);
 
         Parameters param = new Parameters(
-            100,
+            numpoints,
             x_pts,
             y_pts,
             1.0,
