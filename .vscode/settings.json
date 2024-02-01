@@ -1,5 +1,5 @@
 {
   "java.project.sourcePaths": [
-    "decide"
+    "my-app/src/main/java"
   ]
 }
