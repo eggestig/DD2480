@@ -69,6 +69,285 @@ public class CMVTest
         assertTrue("Temp skip the test,", true);
     }
 
+
+    /**
+     * 
+     * LIC 0 TESTS
+     * 
+     */
+
+      /**
+     * LIC 0 is provided with only one point and
+     * should return false as the distance between
+     * "2" points is undefinable.
+     */
+    @Test
+    public void invalid_input_LIC_0_one_point()
+    {
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(1);
+        param.setX_PTS(new double[]{1});
+        param.setY_PTS(new double[]{1});
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC0(param));
+    }
+
+    /**
+     * LIC 0 is given two points with dist > (length = 10),
+     * and should return false.
+     */
+    @Test
+    public void valid_Input_LIC_0_two_points_greater_dist()
+    {
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(2);
+        param.setX_PTS(new double[]{1, 20});
+        param.setY_PTS(new double[]{1, 20});
+        param.setLENGTH1(10);
+
+        CMV cmv = new CMV();
+        assertTrue(cmv.LIC0(param));
+    }
+
+
+    /**
+     * 
+     * LIC 1 TESTS
+     * 
+     */
+
+    /**
+    * LIC 1 is provided with 3 points not all within a radius of
+    * radius1 = 1 and should return True. 
+    */
+    @Test
+    public void valid_Input_LIC_1_points_in_circle()
+    {
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(3);
+        param.setX_PTS(new double[]{2, 4, 6});
+        param.setY_PTS(new double[]{2, 6, 8});
+        param.setRADIUS1(1);
+
+        CMV cmv = new CMV();
+        assertTrue(cmv.LIC1(param));
+    }
+    
+    /**
+     * The Radius cannot be a negative number, and
+     * should return false.
+     */
+    @Test
+    public void valid_Input_LIC_1_negative_radius()
+    {
+        Parameters param = new Parameters();
+        param.setRADIUS1(-1);
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC1(param));
+    }
+
+
+    /**
+     * 
+     * LIC 2 TESTS
+     * 
+     */
+    
+
+    /**
+     * This test should return false as only one point
+     * is provided and an angle cant be defined.
+     */
+    @Test
+    public void invalid_input_LIC_2_one_point()
+    {
+        
+        Parameters params = new Parameters();
+        params.setNUMPOINTS(2);
+        params.setX_PTS(new double[]{1,2});
+        params.setY_PTS(new double[]{1,2});
+        params.setEPSILON(1);
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC2(params));
+
+    }
+      /**
+     * This test should return false as epsilon
+     * is too big
+     */
+    @Test
+    public void invalid_input_LIC_2_tooBigEpsilon()
+    {
+        Parameters params = new Parameters();
+        params.setEPSILON(4);
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC2(params));
+    }
+
+      /**
+     * This test should return false as only one point
+     * is provided and an angle cant be defined.
+     */
+    @Test
+    public void invalid_input_LIC_2_negativeEpsilon()
+    {
+        Parameters params = new Parameters();
+        params.setEPSILON(-1);
+
+        CMV cmv = new CMV();
+        assertFalse(cmv.LIC2(params));
+    }
+
+    /**
+     * LIC 2 is provided with 3 data points forming
+     * a 45 degree angel and should return true for
+     * epsilon = pi/2.
+     */
+    @Test
+    public void valid_input_LIC_2_45dAngel()
+    {   
+        Parameters params = new Parameters();
+        params.setNUMPOINTS(3);
+        params.setX_PTS(new double[]{0, 0, -1});
+        params.setY_PTS(new double[]{0, 1, 0});
+        params.setEPSILON(Math.PI / 2);
+
+        CMV cmv = new CMV();
+        assertTrue(cmv.LIC2(params));
+    }
+
+
+    /**
+     * 
+     * LIC 3 TESTS
+     * 
+     */
+
+    
+    @Test
+    public void valid_input_LIC_3_false_area_less_than_param() {
+        Parameters params = new Parameters();
+        double[] x_pts = new double[] {0,1,1,2};
+        double[] y_pts = new double[] {0,1,0,0};
+        params.setX_PTS(x_pts);
+        params.setY_PTS(y_pts);
+        params.setNUMPOINTS(4);
+        params.setAREA1(2);
+        assertFalse("LIC3", CMV.LIC3(params));
+    }
+
+    @Test
+    public void valid_input_LIC_3_true_area_more_than_param() {
+        Parameters params = new Parameters();
+        double[] x_pts = new double[] {0,1,3,5,7,9};
+        double[] y_pts = new double[] {0,1,0,3,0,3};
+        params.setX_PTS(x_pts);
+        params.setY_PTS(y_pts);
+        params.setNUMPOINTS(6);
+        params.setAREA1(2);
+        assertTrue("LIC3", CMV.LIC3(params));
+    }
+
+    @Test
+    public void invalid_input_LIC_3_throws_error_too_few_points() {
+        Parameters params = new Parameters();
+        double[] x_pts = new double[] {0,1};
+        double[] y_pts = new double[] {0,1};
+        params.setX_PTS(x_pts);
+        params.setY_PTS(y_pts);
+        params.setNUMPOINTS(2);
+        params.setAREA1(2);
+        assertFalse("LIC3", CMV.LIC3(params));
+    }
+
+
+    /**
+     * 
+     * LIC 4 TESTS
+     * 
+     */
+
+    @Test
+    public void valid_input_LIC_4_true_points_in_different_quadrants() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {1,-1,-1,1});
+        params.setY_PTS(new double[] {1,1,-1,-1});
+        params.setNUMPOINTS(4);
+        params.setQUADS(2);
+        params.setQ_PTS(3);
+        assertTrue("LIC4", CMV.LIC4(params));
+    }
+
+    @Test
+    public void valid_input_LIC_4_false_all_points_in_same_quadrant() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {0,1,3,0});
+        params.setY_PTS(new double[] {0,9,5,1});
+        params.setNUMPOINTS(4);
+        params.setQUADS(2);
+        params.setQ_PTS(2);
+        assertFalse("LIC4", CMV.LIC4(params));
+        
+    }
+
+    @Test
+    public void invalid_input_LIC_4_throws_error_too_few_points() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {});
+        params.setY_PTS(new double[] {});
+        params.setQ_PTS(1);
+        params.setNUMPOINTS(0);
+        assertFalse("LIC4", CMV.LIC4(params));
+    }
+
+    @Test
+    public void invalid_input_LIC_4_throws_error_Q_is_nonpositive() {
+        Parameters params = new Parameters();
+        params.setQUADS(-1);
+        assertFalse("LIC4", CMV.LIC4(params));
+    }
+
+
+    /**
+     * 
+     * LIC 5 TESTS
+     * 
+     */
+
+
+    @Test
+    public void valid_input_true_LIC_5() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {5,4,3,2,1});
+        params.setY_PTS(new double[] {1,2,3,4,5});
+        params.setNUMPOINTS(5);
+        System.out.println("True case LIC5");
+        assertTrue("LIC5", CMV.LIC5(params));
+    }
+
+    @Test
+    public void valid_input_false_LIC_5() {
+        Parameters params = new Parameters();
+        params.setX_PTS(new double[] {1,2,3,4,5});
+        params.setY_PTS(new double[] {1,2,3,4,5});
+        params.setNUMPOINTS(5);
+        assertFalse("LIC5", CMV.LIC5(params));
+    }
+
+    @Test
+    public void invalid_input_LIC_5_too_few_points() {
+        Parameters params = new Parameters();
+        params.setNUMPOINTS(1);
+        params.setX_PTS(new double[] {1});
+        params.setY_PTS(new double[] {1});
+        assertFalse("LIC5", CMV.LIC5(params));
+    }
+
     // Test LIC 5 returns false if not two consecutive points exist with decreasing x
     @Test
     public void yes_instance_LIC_5_no_two_consecutive_points_with_decreasing_x_returns_false() {
@@ -106,6 +385,14 @@ public class CMVTest
         assertTrue("LIC 5", cmv.LIC5(param));
 
     }
+
+
+    /**
+     * 
+     * LIC 6 TESTS
+     * 
+     */
+
 
     // Test LIC 6 return true if there exists at least one set of N_PTS consecutive data points
     // such that at least one of the points lies a distance greater than DIST from
@@ -199,6 +486,12 @@ public class CMVTest
     }
 
 
+    /**
+     * 
+     * LIC 7 TESTS
+     * 
+     */
+
     // Test LIC 7 return true if there exists at least one set of two data points separated by
     // exactly K_PTS consecutive intervening points that are a distance greater than
     // the length, LENGTH1, apart.
@@ -285,10 +578,17 @@ public class CMVTest
         assertFalse("LIC 7", cmv.LIC7(param));
     }
 
+
+    /**
+     * 
+     * LIC 8 TESTS
+     * 
+     */
+
+
     // Test LIC 8 return true if there exists at least one set of three data points
     // separated by exactly A_PTS and B_PTS consecutive intervening points,
     // respectively, that cannot be contained within or on a circle of radius RADIUS1.
-
     @Test
     public void yes_instance_LIC_8_three_points_outside_circle() {
         double[] x_pts = new double[]{0.0, 1.0, 100.0, 2.0, -100.0};
@@ -354,507 +654,14 @@ public class CMVTest
         
         assertFalse("LIC 8", cmv.LIC8(param));
     }
-  
-    //Test LIC 6 throws invalidN_PTSError for invalid N_PTS
-    //Invalid N_PTS if N_PTS < 3
-    @Test
-    public void valid_input_LIC_12() {
-        //return ture , the smallest dist is 12.69 , <17
-        double[] x_pts = new double[]{
-            37.84,
-            12.56,
-            65.23,
-            88.11,
-            42.79,
-            9.33,
-            51.45,
-            76.02,
-            23.67,
-            94.88
-        };
-        double[] y_pts = new double[]{
-            5.72,
-            68.94,
-            33.18,
-            79.57,
-            17.41,
-            54.26,
-            91.09,
-            36.75,
-            62.88,
-            8.05};
-        
-        int k_pts = 3;
-        double length2 = 17;
-
-        Parameters param = new Parameters(
-            10,
-            x_pts,
-            y_pts,
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5,
-            6,
-            7.0,
-            8,
-            k_pts,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            length2,
-            18.0,
-            19.0
-        );
-
-        boolean[] cmv;
-        cmv = CMV.initCMV(param, param.getNUMPOINTS(), param.getX_PTS(), param.getY_PTS());
-        for(int licNum = 0; licNum < cmv.length; licNum++)
-        
-        assertTrue(CMV.LIC12(param));
-    }
-    @Test
-    public void invalid_input_LIC_12() {
-        //return ture , the smallest dist is 12.69 , > 11
-        double[] x_pts = new double[]{
-            37.84,
-            12.56,
-            65.23,
-            88.11,
-            42.79,
-            9.33,
-            51.45,
-            76.02,
-            23.67,
-            94.88
-        };
-        double[] y_pts = new double[]{
-            5.72,
-            68.94,
-            33.18,
-            79.57,
-            17.41,
-            54.26,
-            91.09,
-            36.75,
-            62.88,
-            8.05};
-        
-        int k_pts = 3;
-        double length2 = 11;
-
-        Parameters param = new Parameters(
-            10,
-            x_pts,
-            y_pts,
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5,
-            6,
-            7.0,
-            8,
-            k_pts,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            length2,
-            18.0,
-            19.0
-        );
-
-        boolean[] cmv;
-        cmv = CMV.initCMV(param, param.getNUMPOINTS(), param.getX_PTS(), param.getY_PTS());
-        for(int licNum = 0; licNum < cmv.length; licNum++)
-        
-        assertFalse(CMV.LIC12(param));
-    }
-    @Test
-    public void valid_input_LIC_13() {
-        //true test: x,y[0,2,5] is contain in a 30.87 radius circle, with is smaller than radius2(50)
-        double[] x_pts = new double[]{
-            37.84,
-            12.56,
-            65.23,
-            88.11,
-            42.79,
-            9.33,
-            51.45,
-            76.02,
-            23.67,
-            94.88
-        };
-        double[] y_pts = new double[]{
-            5.72,
-            68.94,
-            33.18,
-            79.57,
-            17.41,
-            54.26,
-            91.09,
-            36.75,
-            62.88,
-            8.05};
-        
-
-        Parameters param = new Parameters(
-            
-            10,
-            x_pts,
-            y_pts,
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5,
-            6,
-            7.0,
-            8,
-            3,
-            2,
-            3,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17,
-            50,
-            19.0
-        );
-
-        boolean[] cmv;
-        cmv = CMV.initCMV(param, param.getNUMPOINTS(), param.getX_PTS(), param.getY_PTS());
-        for(int licNum = 0; licNum < cmv.length; licNum++)
-        
-        assertTrue(CMV.LIC13(param));
-    }
-    
-    @Test
-    public void invalid_input_LIC_13() {
-        //true test: the smallest radius circle is 47.9, with is smaller  not than radius2(30)
-        double[] x_pts = new double[]{
-            37.84,
-            12.56,
-            65.23,
-            88.11,
-            42.79,
-            9.33,
-            51.45,
-            76.02,
-            23.67,
-            94.88
-        };
-        double[] y_pts = new double[]{
-            5.72,
-            68.94,
-            33.18,
-            79.57,
-            17.41,
-            54.26,
-            91.09,
-            36.75,
-            62.88,
-            8.05};
-        
-
-        Parameters param = new Parameters(
-            
-            10,
-            x_pts,
-            y_pts,
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5,
-            6,
-            7.0,
-            8,
-            3,
-            2,
-            3,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17,
-            30,
-            19.0
-        );
-
-        boolean[] cmv;
-        cmv = CMV.initCMV(param, param.getNUMPOINTS(), param.getX_PTS(), param.getY_PTS());
-        for(int licNum = 0; licNum < cmv.length; licNum++)
-        
-        assertFalse(CMV.LIC13(param));
-    }
-  /**
-     * LIC 0 is provided with only one point and
-     * should return false as the distance between
-     * "2" points is undefinable.
-     */
-    @Test
-    public void invalid_input_LIC_0_one_point()
-    {
-        Parameters param = new Parameters();
-        param.setNUMPOINTS(1);
-        param.setX_PTS(new double[]{1});
-        param.setY_PTS(new double[]{1});
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC0(param));
-    }
+     
 
     /**
-     * LIC 0 is given two points with dist > (length = 10),
-     * and should return false.
+     * 
+     * LIC 9 TESTS
+     * 
      */
-    @Test
-    public void valid_Input_LIC_0_two_points_greater_dist()
-    {
-        Parameters param = new Parameters();
-        param.setNUMPOINTS(2);
-        param.setX_PTS(new double[]{1, 20});
-        param.setY_PTS(new double[]{1, 20});
-        param.setLENGTH1(10);
 
-        CMV cmv = new CMV();
-        assertTrue(cmv.LIC0(param));
-    }
-
-    /**
-     * LIC 1 is provided with 3 points not all within a radius of
-     * radius1 = 1 and should return True. 
-     */
-    @Test
-    public void valid_Input_LIC_1_points_in_circle()
-    {
-        
-        Parameters param = new Parameters();
-        param.setNUMPOINTS(3);
-        param.setX_PTS(new double[]{2, 4, 6});
-        param.setY_PTS(new double[]{2, 6, 8});
-        param.setRADIUS1(1);
-
-        CMV cmv = new CMV();
-        assertTrue(cmv.LIC1(param));
-    }
-    
-    /**
-     * The Radius cannot be a negative number, and
-     * should return false.
-     */
-    @Test
-    public void valid_Input_LIC_1_negative_radius()
-    {
-        Parameters param = new Parameters();
-        param.setRADIUS1(-1);
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC1(param));
-    }
-
-
-    /**
-     * This test should return false as only one point
-     * is provided and an angle cant be defined.
-     */
-    @Test
-    public void invalid_input_LIC_2_one_point()
-    {
-        
-        Parameters params = new Parameters();
-        params.setNUMPOINTS(2);
-        params.setX_PTS(new double[]{1,2});
-        params.setY_PTS(new double[]{1,2});
-        params.setEPSILON(1);
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC2(params));
-
-    }
-      /**
-     * This test should return false as epsilon
-     * is too big
-     */
-    @Test
-    public void invalid_input_LIC_2_tooBigEpsilon()
-    {
-        Parameters params = new Parameters();
-        params.setEPSILON(4);
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC2(params));
-    }
-
-      /**
-     * This test should return false as only one point
-     * is provided and an angle cant be defined.
-     */
-    @Test
-    public void invalid_input_LIC_2_negativeEpsilon()
-    {
-        Parameters params = new Parameters();
-        params.setEPSILON(-1);
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC2(params));
-    }
-
-    /**
-     * LIC 2 is provided with 3 data points forming
-     * a 45 degree angel and should return true for
-     * epsilon = pi/2.
-     */
-    @Test
-    public void valid_input_LIC_2_45dAngel()
-    {   
-        Parameters params = new Parameters();
-        params.setNUMPOINTS(3);
-        params.setX_PTS(new double[]{0, 0, -1});
-        params.setY_PTS(new double[]{0, 1, 0});
-        params.setEPSILON(Math.PI / 2);
-
-        CMV cmv = new CMV();
-        assertTrue(cmv.LIC2(params));
-    }
-  
-  
-    @Test
-    public void valid_input_LIC_14() {
-        //true test: x,y[1,5,6] is contain in a 188 area of triangle, with is smaller than area2(250)
-        double[] x_pts = new double[]{
-            37.84,
-            12.56,
-            65.23,
-            88.11,
-            42.79,
-            9.33,
-            51.45,
-            76.02,
-            23.67,
-            94.88
-        };
-        double[] y_pts = new double[]{
-            5.72,
-            68.94,
-            33.18,
-            79.57,
-            17.41,
-            54.26,
-            91.09,
-            36.75,
-            62.88,
-            8.05};
-        
-        Parameters param = new Parameters(
-            
-            10,
-            x_pts,
-            y_pts,
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5,
-            6,
-            7.0,
-            8,
-            3,
-            2,
-            3,
-            12,
-            13,
-            4,
-            1,
-            16,
-            17,
-            31,
-            200
-        );
-
-        boolean[] cmv;
-        cmv = CMV.initCMV(param, param.getNUMPOINTS(), param.getX_PTS(), param.getY_PTS());
-        for(int licNum = 0; licNum < cmv.length; licNum++)
-        
-        assertTrue(CMV.LIC14(param));
-    }
-
-    @Test
-    public void invalid_input_LIC_14() {
-        //true test: x,y[1,5,6] is contain in a 188 area of triangle, with is not smaller than area2(180)
-        double[] x_pts = new double[]{
-            37.84,
-            12.56,
-            65.23,
-            88.11,
-            42.79,
-            9.33,
-            51.45,
-            76.02,
-            23.67,
-            94.88
-        };
-        double[] y_pts = new double[]{
-            5.72,
-            68.94,
-            33.18,
-            79.57,
-            17.41,
-            54.26,
-            91.09,
-            36.75,
-            62.88,
-            8.05};
-        
-
-        Parameters param = new Parameters(
-            
-            10,
-            x_pts,
-            y_pts,
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5,
-            6,
-            7.0,
-            8,
-            3,
-            2,
-            3,
-            12,
-            13,
-            4,
-            1,
-            16,
-            17,
-            31,
-            180
-        );
-
-        boolean[] cmv;
-        cmv = CMV.initCMV(param, param.getNUMPOINTS(), param.getX_PTS(), param.getY_PTS());
-        for(int licNum = 0; licNum < cmv.length; licNum++)
-        
-        assertFalse(CMV.LIC14(param));
-    }
-  
-    //Test LIC 9 throws InvalidParameterException for invalid N_PTS
-    //Invalid N_PTS if N_PTS < 3
   
     /* 
     * Test LIC 9 - Yes-instance => True - Angle meets the requirements,
@@ -963,6 +770,14 @@ public class CMVTest
         assertFalse("LIC9", CMV.LIC9(params));
     }
 
+
+    /**
+    * 
+    * LIC 10 TESTS
+    * 
+    */
+
+
     /* 
     * Test LIC 10 - Yes-instance => True - Triangle area meets the requirements,
     * Expect a yes instance to return true. 
@@ -1066,17 +881,14 @@ public class CMVTest
     }
 
 
+    /**
+    * 
+    * LIC 11 TESTS
+    * 
+    */
 
 
-
-
-
-
-
-
-
-
-/* 
+    /* 
     * Test LIC 11 - Yes-instance => True - Point positions meets the requirements,
     * Expect a yes instance to return true. 
     */
@@ -1152,36 +964,130 @@ public class CMVTest
     }
 
 
+    /**
+     * 
+     * LIC 12 TESTS
+     * 
+     */
 
-
-
-
-
-
-
-
-
-
-
-
-    //Test LIC 11
-    //
-    @Test
-    public void valid_input_LIC_11_() {
-        Parameters params = new Parameters();
-        params.setNUMPOINTS(6);
-        params.setG_PTS(1);
-        params.setX_PTS(new double[]{1.0, 2.0, 0.0, 4.0, 5.0, 6.0});
-        params.setY_PTS(new double[]{-1.0, -2.0, -3.0, -4.0, -5.0, -6.0});
-        params.setEPSILON(-1.0);
-
-        System.out.println("");
-        System.out.println("[TEST]");
-        System.out.println("");
-        System.out.flush(); 
-
-        CMV cmv = new CMV();
     
-        assertTrue("LIC11", cmv.LIC11(params));
+    //Test LIC 6 throws invalidN_PTSError for invalid N_PTS
+    //Invalid N_PTS if N_PTS < 3
+    @Test
+    public void valid_input_LIC_12() {
+        //return ture , the smallest dist is 12.69 , <17
+        double[] x_pts = new double[]{37.84,12.56,65.23,88.11,42.79,9.33, 51.45,76.02,23.67,94.88};
+        double[] y_pts = new double[]{5.72,68.94,33.18,79.57,17.41,54.26,91.09,6.75,62.88,8.05};
+        int k_pts = 3;
+        double length2 = 17;
+        Parameters param = new Parameters();
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setK_PTS(k_pts);
+        param.setLENGTH2(length2);
+        param.setNUMPOINTS(10);
+        
+        assertTrue(CMV.LIC12(param));
+    }
+    @Test
+    public void invalid_input_LIC_12() {
+        //return false , the smallest dist is 12.69 , > 11
+        double[] x_pts = new double[]{37.84,12.56,65.23,88.11,42.79,9.33, 51.45,76.02,23.67,94.88};
+        double[] y_pts = new double[]{5.72,68.94,33.18,79.57,17.41,54.26,91.09,6.75,62.88,8.05};
+        int k_pts = 3;
+        double length2 = 11;
+
+        Parameters param = new Parameters();
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setK_PTS(k_pts);
+        param.setLENGTH2(length2);
+        param.setNUMPOINTS(10);
+
+        assertFalse(CMV.LIC12(param));
+    }
+
+
+    /**
+     * 
+     * LIC 13 TESTS
+     * 
+     */
+
+
+    @Test
+    public void valid_input_LIC_13() {
+        //true test: x,y[0,2,5] is contain in a 30.87 radius circle, with is smaller than radius2(50)
+        double[] x_pts = new double[]{37.84,12.56,65.23,88.11,42.79,9.33, 51.45,76.02,23.67,94.88};
+        double[] y_pts = new double[]{5.72,68.94,33.18,79.57,17.41,54.26,91.09,6.75,62.88,8.05};
+        
+        Parameters param = new Parameters();
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setA_PTS(2);
+        param.setB_PTS(3);
+        param.setRADIUS2(50); 
+        param.setNUMPOINTS(10);     
+        assertTrue(CMV.LIC13(param));
+    }
+    
+    @Test
+    public void invalid_input_LIC_13() {
+        //false test: the smallest radius circle is 47.9, with is smaller  not than radius2(30)
+        double[] x_pts = new double[]{37.84,12.56,65.23,88.11,42.79,9.33, 51.45,76.02,23.67,94.88};
+        double[] y_pts = new double[]{5.72,68.94,33.18,79.57,17.41,54.26,91.09,6.75,62.88,8.05};
+        
+        Parameters param = new Parameters();
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setA_PTS(2);
+        param.setB_PTS(3);
+        param.setRADIUS2(30); 
+        param.setNUMPOINTS(10); 
+        
+        assertFalse(CMV.LIC13(param));
+    }
+    
+
+    /**
+    * 
+    * LIC 14 TESTS
+    * 
+    */
+
+
+    @Test
+    public void valid_input_LIC_14() {
+        //true test: x,y[1,5,6] is contain in a 188 area of triangle, with is smaller than area2(250)
+        double[] x_pts = new double[]{37.84,12.56,65.23,88.11,42.79,9.33, 51.45,76.02,23.67,94.88};
+        double[] y_pts = new double[]{5.72,68.94,33.18,79.57,17.41,54.26,91.09,6.75,62.88,8.05};
+
+        Parameters param = new Parameters();
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setAREA2(250);
+        param.setE_PTS(4);
+        param.setF_PTS(1);
+        param.setNUMPOINTS(10);
+
+        assertTrue(CMV.LIC14(param));
+    }
+
+    @Test
+    public void invalid_input_LIC_14() {
+        //false test: x,y[1,5,6] is contain in a 188 area of triangle, with is not smaller than area2(180)
+                
+        double[] x_pts = new double[]{37.84,12.56,65.23,88.11,42.79,9.33, 51.45,76.02,23.67,94.88};
+        double[] y_pts = new double[]{5.72,68.94,33.18,79.57,17.41,54.26,91.09,6.75,62.88,8.05};
+
+        Parameters param = new Parameters();
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setAREA2(180);
+        param.setE_PTS(4);
+        param.setF_PTS(1);
+        param.setNUMPOINTS(10);
+        
+        assertFalse(CMV.LIC14(param));
     }
 }
