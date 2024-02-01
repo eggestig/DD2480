@@ -101,6 +101,31 @@ public class Parameters {
         );
     }
 
+    public Parameters() {
+        this.NUMPOINTS = 0;
+        this.X_PTS = new double[0];
+        this.Y_PTS = new double[0];
+        this.LENGTH1 = 0.0;
+        this.RADIUS1 = 0.0;
+        this.EPSILON = 0.0;
+        this.AREA1 = 0.0;
+        this.Q_PTS = 0;
+        this.QUADS = 0;
+        this.DIST = 0.0;
+        this.N_PTS = 0;
+        this.K_PTS = 0;
+        this.A_PTS = 0;
+        this.B_PTS = 0;
+        this.C_PTS = 0;
+        this.D_PTS = 0;
+        this.E_PTS = 0;
+        this.F_PTS = 0;
+        this.G_PTS = 0;
+        this.LENGTH2 = 0.0;
+        this.RADIUS2 = 0.0;
+        this.AREA2 = 0.0;
+    }
+
     public Parameters(
         int NUMPOINTS,
         double[] X_PTS,
