@@ -213,10 +213,8 @@ public class CMV{
         // Else return false.
 
         if (params.getX_PTS().length<2 || params.getY_PTS().length<2 || params.getNUMPOINTS() < 2) {
-            System.out.println("Error");
             return false;
         }
-        System.out.println("Continued !!!");
 
         for(int i = 0; i < params.getNUMPOINTS(); i++) {
             for(int j = i + 1; j < params.getNUMPOINTS(); j++) {
@@ -407,8 +405,6 @@ public class CMV{
             double angle = Math.acos(cosineAngle);
     
             if(angle < (Math.PI - params.getEPSILON()) || angle > (Math.PI + params.getEPSILON())) {
-                //System.out.println(angle  + "<" + (Math.PI - params.getEPSILON()) + " || " + angle + ">" + (Math.PI + params.getEPSILON()));
-                //System.out.flush(); 
                 return true;
             }
         }
@@ -444,9 +440,6 @@ public class CMV{
             double y2 = params.getY_PTS()[j]; // Vertex
             double x3 = params.getX_PTS()[k];
             double y3 = params.getY_PTS()[k];
-                
-            //System.out.println((0.5 * Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2))) + " > " + params.getAREA1());
-            //System.out.flush(); 
             
             if(0.5 * Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) > params.getAREA1()) {
                 return true;
@@ -474,8 +467,6 @@ public class CMV{
       
         for(int i = 0; i < params.getNUMPOINTS() - (params.getG_PTS() + 1); i++) {
             int j = i + 1 + params.getG_PTS();
-            System.out.println((params.getX_PTS()[j] - params.getX_PTS()[i]) + " < 0 ");
-            System.out.flush(); 
             if(params.getX_PTS()[j] - params.getX_PTS()[i] < 0) {
                 return true;
             }
