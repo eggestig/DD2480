@@ -16,64 +16,65 @@ public class CMV {
 
         switch(LIC_num) {
             case(0):
-                return LIC0();
+                return LIC0(param);
             case(1):
-                return LIC1();
+                return LIC1(param);
             case(2):
-                return LIC2();
+                return LIC2(param);
             default:
                 return false;
             }
     }
 
-    private static boolean LIC0() {
-        // TODO:
+    public static boolean LIC0(Parameters params) {
         // Return true if there exists at least one set of two consecutive data points
         // that are a distance greater than the length, LENGTH1, apart.
         // Else return false.
 
-        if (param.getLENGTH1() < 0)
+        if (params.getX_PTS().length < 2 || params.getY_PTS().length  < 2) {
+            return false;
+        }
+
+        if (params.getLENGTH1() < 0)
             return false;
 
-        for(int i = 0; i < numPoints; i++) {
-            for(int j = i + 1; j < numPoints; j++) {
-                if(utils.dist(x_pts[i], y_pts[i], x_pts[j], y_pts[j]) > param.getLENGTH1()) {
-                    return true;
-                }
+        for(int i = 0; i < params.getNUMPOINTS() - 1; i++) {
+            if(utils.dist(params.getX_PTS()[i], params.getY_PTS()[i], params.getX_PTS()[i+1], params.getY_PTS()[i+1]) > params.getLENGTH1()) {
+                return true;
             }
         }
 
         return false;
     }
 
-    private static Boolean LIC1(){
+    public static Boolean LIC1(Parameters params){
         // Return true if there exists at least one set of three consecutive data points that cannot all be contained
         // within or on a circle of radius RADIUS1. (0 ≤ RADIUS1)
         // Else return false.
 
-        for(int i = 0; i < numPoints; i++) {
-            for(int j = i + 1; j < numPoints; j++) {
-                for(int k = j + 1; k < numPoints; k++) {
+        if (params.getX_PTS().length < 3 || params.getY_PTS().length  < 3 ) {
+            return false;
+        }
 
-                    double x1 = x_pts[i]; double y1 = y_pts[i];
-                    double x2 = x_pts[j]; double y2 = y_pts[j];
-                    double x3 = x_pts[k]; double y3 = y_pts[k];
-            
-                    double a = utils.dist(x1, y1, x2, y2);
-                    double b = utils.dist(x2, y2, x3, y3);
-                    double c = utils.dist(x3, y3, x1, y1);
-            
-                    if(utils.circumRadius(a, b, c) > param.getRADIUS1()) {
-                        return true;
-                    }
-                }
+        for(int i = 0; i < params.getNUMPOINTS() - 2; i++) {
+
+            double x1 = params.getX_PTS()[i]; double y1 = params.getY_PTS()[i];
+            double x2 = params.getX_PTS()[i+1]; double y2 = params.getY_PTS()[i+1];
+            double x3 = params.getX_PTS()[i+2]; double y3 = params.getY_PTS()[i+2];
+    
+            double a = utils.dist(x1, y1, x2, y2);
+            double b = utils.dist(x2, y2, x3, y3);
+            double c = utils.dist(x3, y3, x1, y1);
+
+            if(utils.circumRadius(a, b, c) > params.getRADIUS1()) {
+                return true;
             }
         }
 
         return false;
     }
 
-    private static Boolean LIC2() {
+    public static Boolean LIC2(Parameters params) {
         // Return true if there exists at least one set of three consecutive data points
         // which form an angle such that: angle < (PI − EPSILON) or angle > (PI + EPSILON).
         // Return false if either the first point or the last point (or both) coincides with the vertex.
@@ -83,31 +84,35 @@ public class CMV {
         // If either the first point or the last point (or both) coincides with the vertex,
         // the angle is undefined and the LIC is not satisfied by those three points.
 
-        for(int i = 0; i < numPoints; i++) {
-            for(int j = i + 1; j < numPoints; j++) {
-                for(int k = j + 1; k < numPoints; k++) {
+        if (params.getX_PTS().length < 3 || params.getY_PTS().length  < 3 ) {
+            return false;
+        }
+
+        if (params.getEPSILON() < 0 || params.getEPSILON() > Math.PI) {
+            return false;            
+        }
+
+        for(int i = 0; i < params.getNUMPOINTS() - 2; i++) {
                     
-                    double x1 = x_pts[i];
-                    double y1 = y_pts[i];
-                    double x2 = x_pts[j]; // Vertex
-                    double y2 = y_pts[j]; // Vertex
-                    double x3 = x_pts[k];
-                    double y3 = y_pts[k];
-            
-                    Double n1 = utils.euclideanNorm(x1, y1, x2, y2);
-                    Double n2 = utils.euclideanNorm(x2, y2, x3, y3);
-            
-                    // Calculate the cosine of the angle between the vectors
-                    Double cosineAngle = utils.dotProduct(x1, y1, x2, y2, x3, y3) / (n1 * n2);
-            
-                    // Calculate the angle in radians
-                    Double angle = Math.acos(cosineAngle);
-            
-                    if(angle < (Math.PI - param.getEPSILON()) || angle > (Math.PI + param.getEPSILON())) {
-                        return true;
-                    }
-                }
-            }
+            double x1 = params.getX_PTS()[i];
+            double y1 = params.getY_PTS()[i];
+            double x2 = params.getX_PTS()[i+1]; // Vertex
+            double y2 = params.getY_PTS()[i+1]; // Vertex
+            double x3 = params.getX_PTS()[i+2];
+            double y3 = params.getY_PTS()[i+2];
+    
+            double n1 = utils.euclideanNorm(x1, y1, x2, y2);
+            double n2 = utils.euclideanNorm(x2, y2, x3, y3);
+    
+            // Calculate the cosine of the angle between the vectors
+            double cosineAngle = utils.dotProduct(x1, y1, x2, y2, x3, y3) / (n1 * n2);
+    
+            // Calculate the angle in radians
+            double angle = Math.acos(cosineAngle);
+    
+            if(angle < (Math.PI - params.getEPSILON()) || angle > (Math.PI + params.getEPSILON())) {
+                return true;
+            }        
         }
 
         return false;
