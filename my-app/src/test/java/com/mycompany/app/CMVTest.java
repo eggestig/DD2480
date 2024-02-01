@@ -196,4 +196,26 @@ public class CMVTest
 
         assertFalse("LIC 6", cmv.LIC6(param));
     }
+
+    //Test LIC 9 throws InvalidParameterException for invalid N_PTS
+    //Invalid N_PTS if N_PTS < 3
+    @Test
+    public void valid_input_LIC_9_() {
+        Parameters params = new Parameters();
+        params.setNUMPOINTS(6);
+        params.setC_PTS(1);
+        params.setD_PTS(2);
+        params.setX_PTS(new double[]{1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
+        params.setY_PTS(new double[]{-1.0, -2.0, -3.0, -4.0, -5.0, -6.0});
+        params.setEPSILON(-1.0);
+
+        System.out.println("");
+        System.out.println("[TEST]");
+        System.out.println("");
+        System.out.flush(); 
+
+        CMV cmv = new CMV();
+    
+        assertTrue("LIC9", cmv.LIC9(params));
+    }
 }
