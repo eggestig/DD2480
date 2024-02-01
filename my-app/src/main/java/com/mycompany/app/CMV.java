@@ -6,11 +6,11 @@ public class CMV {
 
     private static int numPoints;
     private static Parameters param;
-    private static int[] x_pts;
-    private static int[] y_pts;
+    private static double[] x_pts;
+    private static double[] y_pts;
     private static LICutils utils = new LICutils();
 
-    private static Boolean evalLIC(int LIC_num) {
+    private static boolean evalLIC(int LIC_num) {
         // TODO: LIC 1 - 14
 
         switch(LIC_num) {
@@ -38,12 +38,12 @@ public class CMV {
             for(int j = i + 1; j < numPoints; j++) {
                 for(int k = j + 1; k < numPoints; k++) {
                 
-                    int x1 = x_pts[i];
-                    int y1 = y_pts[i];
-                    int x2 = x_pts[j];
-                    int y2 = y_pts[j];
-                    int x3 = x_pts[k];
-                    int y3 = y_pts[k];
+                    double x1 = x_pts[i];
+                    double y1 = y_pts[i];
+                    double x2 = x_pts[j];
+                    double y2 = y_pts[j];
+                    double x3 = x_pts[k];
+                    double y3 = y_pts[k];
 
                     if(0.5 * Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) > param.AREA1) {
                         return true;
@@ -110,13 +110,13 @@ public class CMV {
     }
     
 
-    public static Boolean[] initCMV(Parameters PARAM, int NUMPOINTS, int[] xpts, int[] ypts) {
+    public static boolean[] initCMV(Parameters PARAM, int NUMPOINTS, double[] xpts, double[] ypts) {
 
         numPoints = NUMPOINTS;
         param = PARAM;
         x_pts = xpts;
         y_pts = ypts;
-        Boolean[] cmv = new Boolean[15];
+        boolean[] cmv = new boolean[15];
 
         for(int i = 0; i < 15; i++) {
             cmv[i] = evalLIC(i);
