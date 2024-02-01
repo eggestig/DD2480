@@ -1,8 +1,8 @@
 package com.mycompany.app;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.*;
-
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.junit.Test;
 
 import com.mycompany.app.Parameters;
@@ -77,10 +77,11 @@ public class CMVTest
         
         Parameters param = new Parameters();
         param.setNUMPOINTS(2);
-        param.setXpoints(x_pts);
-        param.setYpoints(y_pts);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setN_PTS(3);
 
-        cmv = new CMV();
+        CMV cmv = new CMV();
 
         assertFalse("LIC 5", cmv.LIC5(param));
 
@@ -95,11 +96,11 @@ public class CMVTest
         
         Parameters param = new Parameters();
         param.setNUMPOINTS(2);
-        param.setXpoints(x_pts);
-        param.setYpoints(y_pts);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setN_PTS(3);
 
-        Boolean[] cmv;
-        cmv = new CMV();
+        CMV cmv = new CMV();
 
         assertTrue("LIC 5", cmv.LIC5(param));
 
@@ -119,13 +120,12 @@ public class CMVTest
         
         Parameters param = new Parameters();
         param.setNUMPOINTS(2);
-        param.setXpoints(x_pts);
-        param.setYpoints(y_pts);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
         param.setDIST(dist);
 
-        Boolean[] cmv;
-        cmv = new CMV();
+        CMV cmv = new CMV();
 
         assertTrue("LIC 6", cmv.LIC6(param));
 
@@ -144,19 +144,18 @@ public class CMVTest
         
         Parameters param = new Parameters();
         param.setNUMPOINTS(2);
-        param.setXpoints(x_pts);
-        param.setYpoints(y_pts);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
         param.setDIST(dist);
 
-        Boolean[] cmv;
-        cmv = CMV.initCMV(param);
+        CMV cmv = new CMV();
 
         assertFalse("LIC 6", cmv.LIC6(param));
 
     }
 
-    //Test LIC 6 throws InvalidParameterException for invalid N_PTS
+    //Test LIC 6 returns false for invalid N_PTS
     //Invalid N_PTS if N_PTS < 3
     @Test
     public void invalid_input_LIC_6_N_PTS_less_than_3_throws_invalid_N_PTS_exception() {
@@ -167,19 +166,34 @@ public class CMVTest
         
         Parameters param = new Parameters();
         param.setNUMPOINTS(2);
-        param.setXpoints(x_pts);
-        param.setYpoints(y_pts);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
         param.setDIST(dist);
 
-        Boolean[] cmv;
-        cmv = new CMV();
+        CMV cmv = new CMV();
 
-        Exception exception = assertThrows(InvalidParameterException.class, cmv.LIC6(param));
-    
-        String expectedMessage = "N_PTS need to be between 3 and NUMPOINTS inclusive";
-        String actualMessage = exception.getMessage();
-    
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertFalse("LIC 6", cmv.LIC6(param));
+    }
+
+    //Test LIC 6 returns false for invalid N_PTS
+    //Invalid N_PTS if N_PTS > NUMPOINTS
+    @Test
+    public void invalid_input_LIC_6_N_PTS_less_than_3_throws_invalid_N_PTS_exception() {
+        double[] x_pts = new double[]{0.0, 100.0, 1.0};
+        double[] y_pts = new double[]{0.0, 100.0, 1.0};
+        int n_pts = 10;
+        double dist = 1;
+        
+        Parameters param = new Parameters();
+        param.setNUMPOINTS(2);
+        param.setX_PTS(x_pts);
+        param.setY_PTS(y_pts);
+        param.setN_PTS(n_pts);
+        param.setDIST(dist);
+
+        CMV cmv = new CMV();
+
+        assertFalse("LIC 6", cmv.LIC6(param));
     }
 }

@@ -1,14 +1,13 @@
 package com.mycompany.app;
 
 import java.lang.reflect.Parameter;
-import java.security.InvalidParameterException;
 import java.util.HashSet;
 
 public class CMV {
 
-    private static LICutils utils = new LICutils();
+    public static LICutils utils = new LICutils();
 
-    private static boolean evalLIC(int LIC_num, Parameters param) {
+    public static boolean evalLIC(int LIC_num, Parameters param) {
         // TODO: LIC 1 - 14
 
         switch(LIC_num) {
@@ -27,7 +26,7 @@ public class CMV {
             }
     }
 
-    private static boolean LIC0(Parameters param) {
+    public static boolean LIC0(Parameters param) {
         // TODO:
         // Return true if there exists at least one set of two consecutive data points
         // that are a distance greater than the length, LENGTH1, apart.
@@ -36,7 +35,7 @@ public class CMV {
         return false;
     }
 
-    private static Boolean LIC5(Parameters param) {
+    public static Boolean LIC5(Parameters param) {
         // Return true if there exists at least one set of two consecutive data points,
         // (X[i],Y[i]) and (X[j],Y[j]), such that X[j] - X[i] < 0
         // (where i = j-1).
@@ -55,7 +54,7 @@ public class CMV {
         return false;
     }
 
-    private static Boolean LIC6(Parameters param) {
+    public static Boolean LIC6(Parameters param) {
         // Return true if there exists at least one set of N_PTS consecutive data points
         // such that at least one of the points lies a distance greater than DIST from
         // the line joining the first and last of these N_PTS points.
@@ -72,16 +71,12 @@ public class CMV {
         double[] y_pts = param.getY_PTS();
         double dist = param.getDIST();
         int n_pts = param.getN_PTS();
-
-        if(n_pts < 3 || n_pts > numPoints) {
-            throw new InvalidParameterException("N_PTS need to be between 3 and NUMPOINTS inclusive");
-        }
-
-        if(dist < 0) {
-            throw new InvalidParameterException("dist must be positive float value");
-        }
-
+        
         if(x_pts.length < 3 || y_pts.length < 3) {return false;}
+
+        if(n_pts < 3 || n_pts > numPoints || dist < 0) {
+            return false;
+        }
 
         for(int i = 0; i < numPoints - n_pts; i++) {
             for(int j = i + 1; j < n_pts; j++) {
@@ -94,7 +89,7 @@ public class CMV {
         return false;
     }
 
-    private static Boolean LIC7(Parameters param) {
+    public static Boolean LIC7(Parameters param) {
         // Return true if there exists at least one set of two data points separated by
         // exactly K_PTS consecutive intervening points that are a distance greater than
         // the length, LENGTH1, apart.
@@ -109,12 +104,8 @@ public class CMV {
         int k_pts = param.getK_PTS();
         double length1 = param.getLENGTH1();
 
-        if(k_pts < 1 || k_pts > numPoints - 2) {
-            throw new InvalidParameterException("K_PTS must be between 1 and NUMPOINTS - 2 inclusive");
-        }
-
-        if(length1 < 0) {
-            throw new InvalidParameterException("LENGTH1 must be positive float value");
+        if(k_pts < 1 || k_pts > numPoints - 2 || length1 < 0) {
+            return false;
         }
 
         if(x_pts.length < 3 || y_pts.length < 3) {return false;}
@@ -128,7 +119,7 @@ public class CMV {
         return false;
     }
 
-    private static Boolean LIC8(Parameters param) {
+    public static Boolean LIC8(Parameters param) {
         // Return true if there exists at least one set of three data points
         // separated by exactly A_PTS and B_PTS consecutive intervening points,
         // respectively, that cannot be contained within or on a circle of radius RADIUS1.
@@ -146,11 +137,11 @@ public class CMV {
         double radius1 = param.getRADIUS1();
 
         if(a_pts < 1 || b_pts < 1 || (a_pts + b_pts) > numPoints - 3) {
-            throw new InvalidParameterException("A_PTS and/or B_TS invalid integer value");
+            return false;
         }
 
         if(radius1 < 0) {
-            throw new InvalidParameterException("RADIUS1 must be positive float value");
+            return false;
         }
 
         if(x_pts.length < 5 || y_pts.length < 5) {return false;}
