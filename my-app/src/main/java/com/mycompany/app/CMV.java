@@ -37,7 +37,7 @@ public class CMV{
             }
     }
 
-    private static boolean LIC0(Parameters param) {
+    public static boolean LIC0(Parameters params) {
         // TODO:
         // Return true if there exists at least one set of two consecutive data points
         // that are a distance greater than the length, LENGTH1, apart.
@@ -146,8 +146,13 @@ public class CMV{
 
         int k_pts = param.getK_PTS();
         double length2 = param.getLENGTH2();
+        int numPoints = param.getNUMPOINTS();
+        double[] x_pts = param.getX_PTS();
+        double[] y_pts = param.getY_PTS();
+
         
-        if(x_pts.length < 3 || y_pts.length < 3 || Boolean.TRUE.equals(/*!LIC7()*/false)) {return false;}
+        if(numPoints < 3 || (!LIC7(param))) {return false;}
+        if(length2 < 0 )return false;
         
         for(int i = 0; i < numPoints - (k_pts + 1); i++) {
             
@@ -170,11 +175,15 @@ public class CMV{
         
         // The condition is not met when NUMPOINTS < 5.
         // 0 ≤ RADIUS2
-
-        if(x_pts.length < 5 || y_pts.length < 5 || Boolean.TRUE.equals(/*!LIC8()*/false)) {return false;}
+        int numPoints = param.getNUMPOINTS();
+        double[] x_pts = param.getX_PTS();
+        double[] y_pts = param.getY_PTS();
+        if(numPoints < 5 || (!LIC8(param))) {return false;}
+        if(param.getRADIUS2() < 0 )return false;
 
         int a_pts= param.getA_PTS();
         int b_pts= param.getB_PTS();
+        
 
         for(int i = 0; i < numPoints - ( a_pts + b_pts+2); i++) {
  
@@ -208,8 +217,12 @@ public class CMV{
         
         // The condition is not met when NUMPOINTS < 5.
         // 0 ≤ AREA2
-    
-        if(x_pts.length < 5 || y_pts.length < 5 || Boolean.TRUE.equals(/*!LIC10()*/false)) {return false;}
+        int numPoints = param.getNUMPOINTS();
+        double[] x_pts = param.getX_PTS();
+        double[] y_pts = param.getY_PTS();
+
+        if(numPoints < 5 || (!LIC10(param))) {return false;}
+        if(param.getAREA2() < 0 )return false;
 
         int e_pts= param.getE_PTS();
         int f_pts= param.getF_PTS();
@@ -387,7 +400,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC10(Parameters param) {
+    public static Boolean LIC10(Parameters params) {
         // Return true if there exists at least one set of three data points
         // separated by exactly E_PTS and F_PTS consecutive intervening points,
         // respectively, that are the vertices of a triangle with area greater than AREA1.
@@ -477,7 +490,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC11(Parameters param) {
+    public static Boolean LIC11(Parameters params) {
         // Return true if there exists at least one set of two data points,
         // (X[i],Y[i]) and (X[j],Y[j]), separated by exactly G_PTS
         // consecutive intervening points, such that X[j] - X[i] < 0. (where i < j )
