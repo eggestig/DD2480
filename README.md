@@ -89,6 +89,15 @@ To run the project, like above with building, we recommend being in the project 
 - Created the main test files.
 
 ### Robin Eggestig
+- Implemented the CI/CD Workflow using Github Actions.
+- Improved upon the project structure - and made initial skeleton test work when building.
+- Created installation, build, and run commands (Manually and for CI/CD)
+- Main issue creator and closer. 
+- Implemented LIC 9-11 along with their respective tests (A total of 17 tests)
+- Fixed all main merge issues when combining all issues relating to the LICs the final pull request regarding LICs 3-5, which Robert did.
+- Reviewed and merged pull requests.
+- Participated in a lot of pair/group programming for issues like the combination of all the LICs to CMV along with the PUM, FUV in the Decide class.
+- Helped others with git when needed  
 
 ### Anton Sederlin
 - Initiated the project file structure through maven
