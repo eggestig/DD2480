@@ -24,4 +24,4 @@ jobs:
         run: (cd my-app && mvn --batch-mode --update-snapshots verify)
 
       - name: Run the Java application
-        run: (cd my-app/ && java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App)
+        run: (cd my-app/ && java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App "src/TestFiles/MainYESTest1.in")
