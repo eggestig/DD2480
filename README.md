@@ -101,5 +101,10 @@ To run the project, like above with building, we recommend being in the project 
 ### Anton Sederlin
 
 ### Tsz Ho Wat
+- Made LIC 12 through 14, with corresponding unit tests. Made two tests for each LIC 12 through 14.
+- Create and Made the PUM file
+- Made the simple test of PUM file that can test PUM with random data
+- Made a lot of review and help merge the program, Helped initiate pair-programming
+- Help build the final launch program, incluing combie all part of program, scaner the document and test the final application
 
 ### Robert Skoglund
