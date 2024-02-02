@@ -95,6 +95,7 @@ To run the project, like above with building, we recommend being in the project 
 - Made the LICutils file, containing help methods for making LIC evaluations.
 - Made LIC 5 through 8, with corresponding unit tests. Made three tests for each LIC 5 through 8.
 - Completed the README file for the project. This included the description of the project, the general structure of the README and the Checklist for Way-of-Working.
+- Created the main test files.
 
 ### Robin Eggestig
 
