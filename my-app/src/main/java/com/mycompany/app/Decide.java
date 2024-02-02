@@ -2,12 +2,8 @@ package com.mycompany.app;
 
 public class Decide {
     private Parameters param;
-    private boolean[] cmv;
     private CONNECTORS[][] lcm;
     private boolean[] puv;
-    private int NUMPOINTS;
-    private double[] x_pts;
-    private double[] y_pts;
     private String path; 
     
     public Decide(String path) {
@@ -20,36 +16,21 @@ public class Decide {
         InputParser inputparser = new InputParser(path);
         inputparser.Parse();
 
-        System.out.println("NUMBERS: " + inputparser.getParameters().getNUMPOINTS());
-
         param = inputparser.getParameters();
         lcm = inputparser.getLCM();
         puv = inputparser.getPUV();
     
-
         boolean[] cmv = CMV.compute(param);
-
 
         PUM pum = new PUM();
         pum.receive_CMV(cmv);
         pum.receive_LCM(lcm);
         pum.generate_PUM();
 
-        pum.displayPUM();
         boolean[][] booleanPUM = pum.getPUM();
-   
-        int k = 0;
-        for(boolean lic : cmv) {
-            System.out.println("LIC" + k + '\t' + lic);
-            k++;
-        }
-        
-        System.out.println("Parameters created");
 
         int i;
         int j;
-
-
         int len = 15;
         int[] fuv = new int[len];
         for (i = 0; i < len; i++) {
@@ -82,15 +63,11 @@ public class Decide {
             }  
         }
 
-        System.out.println("Do we want to launch the missile?");
         for (i = 0; i < len; i++) {
             if (fuv[i]==0) {
-                System.out.println("");
-                System.out.println("NO");
                 return "NO";
             }
         }
-        System.out.println("YES");
         return "YES";
     }
 }

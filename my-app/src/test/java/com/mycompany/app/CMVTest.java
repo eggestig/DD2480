@@ -1,12 +1,8 @@
 package com.mycompany.app;
 
 import static org.junit.Assert.*;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
 import org.junit.Test;
 
-import com.mycompany.app.Parameters;
-import com.mycompany.app.CMV;
 import java.util.Random;
 import java.util.Arrays; 
 
@@ -33,9 +29,7 @@ public class CMVTest
         param.setNUMPOINTS(1);
         param.setX_PTS(new double[]{1});
         param.setY_PTS(new double[]{1});
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC0(param));
+        assertFalse(CMV.LIC0(param));
     }
 
     /**
@@ -50,9 +44,7 @@ public class CMVTest
         param.setX_PTS(new double[]{1, 20});
         param.setY_PTS(new double[]{1, 20});
         param.setLENGTH1(10);
-
-        CMV cmv = new CMV();
-        assertTrue(cmv.LIC0(param));
+        assertTrue(CMV.LIC0(param));
     }
 
 
@@ -75,9 +67,7 @@ public class CMVTest
         param.setX_PTS(new double[]{2, 4, 6});
         param.setY_PTS(new double[]{2, 6, 8});
         param.setRADIUS1(1);
-
-        CMV cmv = new CMV();
-        assertTrue(cmv.LIC1(param));
+        assertTrue(CMV.LIC1(param));
     }
     
     /**
@@ -89,9 +79,7 @@ public class CMVTest
     {
         Parameters param = new Parameters();
         param.setRADIUS1(-1);
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC1(param));
+        assertFalse(CMV.LIC1(param));
     }
 
 
@@ -114,10 +102,8 @@ public class CMVTest
         params.setNUMPOINTS(2);
         params.setX_PTS(new double[]{1,2});
         params.setY_PTS(new double[]{1,2});
-        params.setEPSILON(1);
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC2(params));
+        params.setEPSILON(1);        
+        assertFalse(CMV.LIC2(params));
 
     }
       /**
@@ -129,9 +115,7 @@ public class CMVTest
     {
         Parameters params = new Parameters();
         params.setEPSILON(4);
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC2(params));
+        assertFalse(CMV.LIC2(params));
     }
 
       /**
@@ -143,9 +127,7 @@ public class CMVTest
     {
         Parameters params = new Parameters();
         params.setEPSILON(-1);
-
-        CMV cmv = new CMV();
-        assertFalse(cmv.LIC2(params));
+        assertFalse(CMV.LIC2(params));
     }
 
     /**
@@ -161,9 +143,7 @@ public class CMVTest
         params.setX_PTS(new double[]{0, 0, -1});
         params.setY_PTS(new double[]{0, 1, 0});
         params.setEPSILON(Math.PI / 2);
-
-        CMV cmv = new CMV();
-        assertTrue(cmv.LIC2(params));
+        assertTrue(CMV.LIC2(params));
     }
 
 
@@ -306,9 +286,9 @@ public class CMVTest
         param.setY_PTS(y_pts);
         param.setN_PTS(3);
 
-        CMV cmv = new CMV();
+        
 
-        assertFalse("LIC 5", cmv.LIC5(param));
+        assertFalse("LIC 5", CMV.LIC5(param));
 
     }
 
@@ -324,10 +304,7 @@ public class CMVTest
         param.setX_PTS(x_pts);
         param.setY_PTS(y_pts);
         param.setN_PTS(3);
-
-        CMV cmv = new CMV();
-
-        assertTrue("LIC 5", cmv.LIC5(param));
+        assertTrue("LIC 5", CMV.LIC5(param));
 
     }
 
@@ -357,10 +334,7 @@ public class CMVTest
         param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
         param.setDIST(dist);
-
-        CMV cmv = new CMV();
-
-        assertTrue("LIC 6", cmv.LIC6(param));
+        assertTrue("LIC 6", CMV.LIC6(param));
 
     }
 
@@ -381,10 +355,7 @@ public class CMVTest
         param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
         param.setDIST(dist);
-
-        CMV cmv = new CMV();
-
-        assertFalse("LIC 6", cmv.LIC6(param));
+        assertFalse("LIC 6", CMV.LIC6(param));
 
     }
 
@@ -403,10 +374,7 @@ public class CMVTest
         param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
         param.setDIST(dist);
-
-        CMV cmv = new CMV();
-
-        assertFalse("LIC 6", cmv.LIC6(param));
+        assertFalse("LIC 6", CMV.LIC6(param));
     }
 
     // Test LIC 6 returns false for invalid N_PTS
@@ -424,10 +392,7 @@ public class CMVTest
         param.setY_PTS(y_pts);
         param.setN_PTS(n_pts);
         param.setDIST(dist);
-
-        CMV cmv = new CMV();
-
-        assertFalse("LIC 6", cmv.LIC6(param));
+        assertFalse("LIC 6", CMV.LIC6(param));
     }
 
 
@@ -453,10 +418,7 @@ public class CMVTest
         param.setY_PTS(y_pts);
         param.setK_PTS(k_pts);
         param.setLENGTH1(length1);
-
-        CMV cmv = new CMV();
-
-        assertTrue("LIC 7", cmv.LIC7(param));
+        assertTrue("LIC 7", CMV.LIC7(param));
     }
 
     // Test LIC 7 return false if there does not exist at least one set of two data points separated by
@@ -475,10 +437,7 @@ public class CMVTest
         param.setY_PTS(y_pts);
         param.setK_PTS(k_pts);
         param.setLENGTH1(length1);
-
-        CMV cmv = new CMV();
-
-        assertFalse("LIC 7", cmv.LIC7(param));
+        assertFalse("LIC 7", CMV.LIC7(param));
     }
 
     // Test LIC 7 returns false if invalid K_PTS
@@ -496,10 +455,7 @@ public class CMVTest
         param.setY_PTS(y_pts);
         param.setK_PTS(k_pts);
         param.setLENGTH1(length1);
-
-        CMV cmv = new CMV();
-
-        assertFalse("LIC 7", cmv.LIC7(param));
+        assertFalse("LIC 7", CMV.LIC7(param));
     }
 
     // Test LIC 7 returns false if invalid K_PTS
@@ -517,10 +473,7 @@ public class CMVTest
         param.setY_PTS(y_pts);
         param.setK_PTS(k_pts);
         param.setLENGTH1(length1);
-
-        CMV cmv = new CMV();
-
-        assertFalse("LIC 7", cmv.LIC7(param));
+        assertFalse("LIC 7", CMV.LIC7(param));
     }
 
 
@@ -549,10 +502,7 @@ public class CMVTest
         param.setA_PTS(a_pts);
         param.setB_PTS(b_pts);
         param.setRADIUS1(radius1);
-        
-        CMV cmv = new CMV();
-        
-        assertTrue("LIC 8", cmv.LIC8(param));
+        assertTrue("LIC 8", CMV.LIC8(param));
     }
 
     // Test LIC 8 returns false when condition not met.
@@ -572,10 +522,7 @@ public class CMVTest
         param.setA_PTS(a_pts);
         param.setB_PTS(b_pts);
         param.setRADIUS1(radius1);
-
-        CMV cmv = new CMV();
-
-        assertFalse("LIC 8", cmv.LIC8(param));
+        assertFalse("LIC 8", CMV.LIC8(param));
     }
 
     // Test LIC 8 returns false when A_PTS + B_PTS > NUMPOINTS - 3
@@ -594,10 +541,7 @@ public class CMVTest
         param.setA_PTS(a_pts);
         param.setB_PTS(b_pts);
         param.setRADIUS1(radius1);
-        
-        CMV cmv = new CMV();
-        
-        assertFalse("LIC 8", cmv.LIC8(param));
+        assertFalse("LIC 8", CMV.LIC8(param));
     }
      
 
@@ -821,7 +765,6 @@ public class CMVTest
         params.setX_PTS(new double[]{1.0, 2.0, 0.0, 4.0, 5.0, 6.0});
         params.setY_PTS(new double[]{-1.0, -2.0, -3.0, -4.0, -5.0, -6.0});
         params.setAREA1(7.4);
-    
         assertFalse("LIC10", CMV.LIC10(params));
     }
 
