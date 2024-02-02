@@ -1,13 +1,9 @@
 package com.mycompany.app;
-
-import java.lang.reflect.Parameter;
 import java.util.HashSet;
-import java.util.Arrays;
 
 public class CMV{
 
     public static boolean evalLIC(int LIC_num, Parameters param) {
-        // TODO: LIC 1 - 14
 
         switch(LIC_num) {
             case(0):
@@ -46,7 +42,6 @@ public class CMV{
     }
 
     public static boolean LIC0(Parameters params) {
-        // TODO:
         // Return true if there exists at least one set of two consecutive data points
         // that are a distance greater than the length, LENGTH1, apart.
         // Else return false.
@@ -68,7 +63,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC1(Parameters params){
+    public static boolean LIC1(Parameters params){
         // Return true if there exists at least one set of three consecutive data points that cannot all be contained
         // within or on a circle of radius RADIUS1. (0 ≤ RADIUS1)
         // Else return false.
@@ -95,7 +90,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC2(Parameters params) {
+    public static boolean LIC2(Parameters params) {
         // Return true if there exists at least one set of three consecutive data points
         // which form an angle such that: angle < (PI − EPSILON) or angle > (PI + EPSILON).
         // Return false if either the first point or the last point (or both) coincides with the vertex.
@@ -139,7 +134,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC3(Parameters params) {
+    public static boolean LIC3(Parameters params) {
         // Return true if there exists at least one set of three consecutive data points
         // that are the vertices of a triangle with area greater than AREA1.
         // Else return false.
@@ -170,8 +165,7 @@ public class CMV{
         return false;
     }
 
-    // ************ Verify that this method works as intended, not sure if it's implemented correctly *****//
-    public static Boolean LIC4(Parameters params) {
+    public static boolean LIC4(Parameters params) {
         // Return true if there exists at least one set of Q_PTS consecutive data points 
         // that lie in more than QUADS quadrants.
         // Else return false.
@@ -206,7 +200,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC5(Parameters params) {
+    public static boolean LIC5(Parameters params) {
         // Return true if there exists at least one set of two consecutive data points,
         // (X[i],Y[i]) and (X[j],Y[j]), such that X[j] - X[i] < 0
         // (where i = j-1).
@@ -227,7 +221,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC6(Parameters param) {
+    public static boolean LIC6(Parameters param) {
         // Return true if there exists at least one set of N_PTS consecutive data points
         // such that at least one of the points lies a distance greater than DIST from
         // the line joining the first and last of these N_PTS points.
@@ -277,7 +271,7 @@ public class CMV{
         return  false;
     }
 
-    public static Boolean LIC7(Parameters param) {
+    public static boolean LIC7(Parameters param) {
         // Return true if there exists at least one set of two data points separated by
         // exactly K_PTS consecutive intervening points that are a distance greater than
         // the length, LENGTH1, apart.
@@ -300,8 +294,6 @@ public class CMV{
             return false;
         }
         
-
-        System.out.flush();
         for(int i = 0; i < numPoints - k_pts - 1; i++) {
             if(LICutils.dist(x_pts[i], y_pts[i], x_pts[i + k_pts + 1], y_pts[i + k_pts + 1]) > length1) {
 
@@ -311,7 +303,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC8(Parameters param) {
+    public static boolean LIC8(Parameters param) {
         // Return true if there exists at least one set of three data points
         // separated by exactly A_PTS and B_PTS consecutive intervening points,
         // respectively, that cannot be contained within or on a circle of radius RADIUS1.
@@ -412,7 +404,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC10(Parameters params) {
+    public static boolean LIC10(Parameters params) {
         // Return true if there exists at least one set of three data points
         // separated by exactly E_PTS and F_PTS consecutive intervening points,
         // respectively, that are the vertices of a triangle with area greater than AREA1.
@@ -448,7 +440,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC11(Parameters params) {
+    public static boolean LIC11(Parameters params) {
         // Return true if there exists at least one set of two data points,
         // (X[i],Y[i]) and (X[j],Y[j]), separated by exactly G_PTS
         // consecutive intervening points, such that X[j] - X[i] < 0. (where i < j )
@@ -509,7 +501,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC13(Parameters param) {
+    public static boolean LIC13(Parameters param) {
         // Return true if there exists at least one set of three data points,
         // separated by exactly A_PTS and B_PTS consecutive intervening points,
         // respectively, that cannot be contained within or on a circle of radius RADIUS1.
@@ -549,7 +541,7 @@ public class CMV{
         return false;
     }
 
-    public static Boolean LIC14(Parameters param) {
+    public static boolean LIC14(Parameters param) {
         // Return true if there exists at least one set of three data points,
         // separated by exactly E_PTS and F_PTS consecutive intervening points,
         // respectively, that are the vertices of a triangle with area greater than AREA1.

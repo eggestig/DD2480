@@ -21,8 +21,6 @@ public class InputParser {
 			Scanner scanner = new Scanner(file);
 
             int NUMPOINTS =  scanner.nextInt();     
-            System.out.println("NUM POINTS: " + NUMPOINTS);
-
             double[] X_PTS = new double[NUMPOINTS];
             double[] Y_PTS  = new double[NUMPOINTS];
 
@@ -62,7 +60,7 @@ public class InputParser {
             double LENGTH2 = scanner.nextDouble();
             double RADIUS2 = scanner.nextDouble();
             double AREA2 = scanner.nextDouble();
-            System.out.println("AREA2: " + AREA2);
+            // System.out.println("AREA2: " + AREA2);
                
             Parameters params = new Parameters(
                 NUMPOINTS,

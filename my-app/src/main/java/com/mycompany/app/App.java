@@ -1,6 +1,4 @@
 package com.mycompany.app;
-import java.util.Random;
-import java.util.Arrays; 
 
 public class App {
     static Parameters param;
@@ -14,6 +12,6 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         Decide decide = new Decide(args[0]);
-        decide.decide();
+        System.out.println(decide.decide());
     }
 }

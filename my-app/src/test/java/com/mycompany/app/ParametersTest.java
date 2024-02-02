@@ -1,10 +1,7 @@
 package com.mycompany.app;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
-import com.mycompany.app.Parameters;
 import java.util.Random;
 import java.util.Arrays; 
 
