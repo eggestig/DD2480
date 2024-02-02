@@ -106,6 +106,10 @@ To run the project, like above with building, we recommend being in the project 
 - Reviewed several pull requests and assisted with pair programming when needed. 
 
 ### Tsz Ho Wat
+- Made LIC 12 - 14, with corresponding unit tests.
+- Create and Made the PUM file, including handle with CMV/LCM data, compute PUM, and display PUM
+- Made the simple test of PUM file that can test PUM with random or certain data
+- Conducted reviews and helped merge the program, Helped initiate pair-programming
 
 ### Robert Skoglund
 
