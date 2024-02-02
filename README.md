@@ -107,3 +107,9 @@ To run the project, like above with building, we recommend being in the project 
 ### Tsz Ho Wat
 
 ### Robert Skoglund
+
+- Created FUV file with randomly generated input
+- Made LICs 3 - 5 with correspoinding unit tests
+- Review and merged changes thoroughly through diverse issues
+- Finalized the LIC conditions and testing
+- Helped initiate pair-programming and setting up IDE environments
